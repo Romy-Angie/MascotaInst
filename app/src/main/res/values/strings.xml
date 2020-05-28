@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Little Pet</string>
+    <string name="name_mascota">Firulais</string>
+    <string name="ranking">0</string>
+    <string name="action_favorito">favorito</string>
+    <string name="action_setting">setting</string>
+
+</resources>
