@@ -2,9 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/setting"
-        android:title="@string/action_setting"
-        app:showAsAction="never"/>
+    <item
+        android:id="@+id/mContacto"
+        android:title="@string/action_contacto"
+        android:orderInCategory="100"
+        >
+
+    </item>
+    <item
+        android:id="@+id/mAcerca"
+        android:title="@string/action_acerca"
+        android:orderInCategory="100"
+        >
+
+    </item>
+
 
     <item android:id="@+id/action_favorito"
         android:title="@string/action_favorito"

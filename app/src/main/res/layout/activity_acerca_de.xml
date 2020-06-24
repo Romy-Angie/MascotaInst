@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.AcercaDe">
+
+    <include android:id="@+id/miActionBar"
+        layout = "@layout/actionbar"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        >
+    </include>
+
+    <ImageView
+        android:id="@+id/imgVLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:layout_below="@+id/miActionBar"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="@string/tv_empresa"
+        android:textSize="20dp"
+        android:layout_below="@+id/imgVLogo"
+        />
+
+
+</RelativeLayout>

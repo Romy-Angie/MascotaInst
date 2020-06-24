@@ -1,8 +1,17 @@
 <resources>
     <string name="app_name">My Little Pet</string>
-    <string name="name_mascota">Firulais</string>
+    <string name="name_mascota">Lucho</string>
     <string name="ranking">0</string>
     <string name="action_favorito">favorito</string>
     <string name="action_setting">setting</string>
+    <string name="action_contacto">Contacto</string>
+    <string name="action_acerca">Acerca de...</string>
+    <string name="edit_nombre">Nombre y Apellido</string>
+    <string name="edit_email">Correo Electrónico</string>
+    <string name="edit_Comentarios">Comentarios</string>
+    <string name="btn_enviarComent">Enviar Comentario</string>
+    <string name="tv_empresa">Reaching dreams es una empresa que tiene como objetivo hacer que tu estilo de vida se conecte de forma sencilla con la tecnologia. </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
