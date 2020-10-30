@@ -4,13 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Mascota  {
-    private  int id;
+    private String id;
     private String nombre;
-    private int foto;
-    private int ranking;
+    private String foto;
+    private int ranking= 0;
 
 
-    public Mascota(int id, String nombre, int foto, int ranking) {
+
+    public Mascota(String id, String nombre, String foto, int ranking) {
         this.id = id;
         this.nombre = nombre;
         this.foto = foto;
@@ -18,7 +19,7 @@ public class Mascota  {
     }
 
 
-    public Mascota( String nombre, int foto, int ranking) {
+    public Mascota( String nombre, String foto, int ranking) {
 
         this.nombre = nombre;
         this.foto = foto;
@@ -37,11 +38,11 @@ public class Mascota  {
         this.nombre = nombre;
     }
 
-    public int getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(int foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 
@@ -53,8 +54,8 @@ public class Mascota  {
         this.ranking = ranking;
     }
 
-    public int getId() { return id; }
+    public String getId() { return id; }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(String id) { this.id = id; }
 
 }

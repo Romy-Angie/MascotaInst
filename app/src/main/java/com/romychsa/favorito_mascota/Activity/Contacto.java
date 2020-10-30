@@ -77,6 +77,11 @@ public class Contacto extends AppCompatActivity implements View.OnClickListener 
                 Intent j = new Intent(this, AcercaDe.class);
                 startActivity(j);
                 break;
+
+            case R.id.mConfigCuenta:
+                Intent h = new Intent(this, ConfigCuenta.class);
+                startActivity(h);
+                break;
        
         }
 

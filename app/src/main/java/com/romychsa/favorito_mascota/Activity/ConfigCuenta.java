@@ -1,30 +1,34 @@
 package com.romychsa.favorito_mascota.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.romychsa.favorito_mascota.Adaptador.PerfilMascotaAdaptador;
 import com.romychsa.favorito_mascota.Fragment.PerfilFragment;
-import com.romychsa.favorito_mascota.Fragment.RecyclerViewFragment;
 import com.romychsa.favorito_mascota.R;
 
-import java.util.ArrayList;
+public class ConfigCuenta extends AppCompatActivity implements View.OnClickListener {
+    private EditText editTextUsuario;
+    private Button btnEnviar;
 
-public class AcercaDe extends AppCompatActivity {
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_acerca_de);
+        setContentView(R.layout.config_cuenta);
 
         Toolbar miActionBar = (Toolbar)findViewById(R.id.miActionBar);
         setSupportActionBar(miActionBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        editTextUsuario=(EditText)findViewById(R.id.etAgregar);
+        btnEnviar =(Button)findViewById(R.id.btnEnviar);
+        btnEnviar.setOnClickListener(this);
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -56,13 +60,9 @@ public class AcercaDe extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private ArrayList<Fragment> agregarFragments(){
-        ArrayList<Fragment> fragments = new ArrayList<>();
-
-        fragments.add(new RecyclerViewFragment());
-        fragments.add(new PerfilFragment());
-
-        return fragments;
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(ConfigCuenta.this, PerfilMascotaAdaptador.class);
+        startActivity(intent);
     }
-
 }

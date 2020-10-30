@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "328108803439",
+    "firebase_url": "https://mascotafavorita-690ce.firebaseio.com",
+    "project_id": "mascotafavorita-690ce",
+    "storage_bucket": "mascotafavorita-690ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328108803439:android:38c5f6a2197f445068549a",
+        "android_client_info": {
+          "package_name": "com.romychsa.favorito_mascota"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328108803439-anrac3ibaobcrl3u5h2rktsdnv050438.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.romychsa.favorito_mascota",
+            "certificate_hash": "49cdf73ada35803938c039dae42ebeef8052aad1"
+          }
+        },
+        {
+          "client_id": "328108803439-st9sd637ptcl9ir5tnlh5n8f1kfcnt68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyleJflQmx2IMzxVRQ0oUV3zvuVi0ljCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328108803439-st9sd637ptcl9ir5tnlh5n8f1kfcnt68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

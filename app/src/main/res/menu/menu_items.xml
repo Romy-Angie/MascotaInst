@@ -17,11 +17,29 @@
 
     </item>
 
+    <item
+        android:id="@+id/mConfigCuenta"
+        android:title="@string/action_configcuenta"
+        android:orderInCategory="100"
+        >
+
+    </item>
+
+    <item
+        android:id="@+id/mNotificacion"
+        android:title="@string/action_notificacion"
+        android:orderInCategory="100"
+
+        >
+
+    </item>
 
     <item android:id="@+id/action_favorito"
         android:title="@string/action_favorito"
         android:icon="@mipmap/estrella"
         app:showAsAction="always"
         />
+
+
 
 </menu>
