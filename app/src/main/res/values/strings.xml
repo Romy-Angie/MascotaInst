@@ -6,6 +6,8 @@
     <string name="action_setting">setting</string>
     <string name="action_contacto">Contacto</string>
     <string name="action_acerca">Acerca de...</string>
+    <string name="action_configcuenta">Configurar cuenta</string>
+    <string name="action_notificacion">Recibir Notificaciones</string>
     <string name="edit_nombre">Nombre y Apellido</string>
     <string name="edit_email">Correo Electrónico</string>
     <string name="edit_Comentarios">Comentarios</string>
@@ -13,5 +15,11 @@
     <string name="tv_empresa">Reaching dreams es una empresa que tiene como objetivo hacer que tu estilo de vida se conecte de forma sencilla con la tecnologia. </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="escribir_usuario">Escribe tu usuario</string>
+    <string name="agregar_usuario">Guardar usuario</string>
+
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+    <string name="channel_name">canal</string>
+    <string name="channel_description">Bienvenido al canal 1</string>
 
 </resources>

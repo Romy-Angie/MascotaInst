@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.romychsa.favorito_mascota.Fragment.IRecyclerViewFragment;
+import com.romychsa.favorito_mascota.Fragment.IPerfilFragment;
 import com.romychsa.favorito_mascota.Pojo.Mascota;
 import com.romychsa.favorito_mascota.RestApi.EndPointsAPI;
 import com.romychsa.favorito_mascota.RestApi.adapter.RestApiAdapter;
@@ -18,15 +18,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPresenter {
-
-    private IRecyclerViewFragment iRecyclerViewFragment;
+public class RecyclerViewPerfilFragmentPresenter implements IRecyclerViewFragmentPresenter {
+    private IPerfilFragment iPerfilFragment;
     private Context context;
     private ConstructorMascotas constructorMascotas;
     private ArrayList<Mascota> mascotas;
 
-    public RecyclerViewFragmentPresenter(IRecyclerViewFragment iRecyclerViewFragment, Context context) {
-        this.iRecyclerViewFragment = iRecyclerViewFragment;
+    public RecyclerViewPerfilFragmentPresenter(IPerfilFragment iPerfilFragment, Context context) {
+        this.iPerfilFragment = iPerfilFragment;
         this.context = context;
         //obtenerMascotasBaseDatos();
         ObtenerMediosRecientes();
@@ -34,25 +33,22 @@ public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPrese
 
     @Override
     public void obtenerMascotasBaseDatos() {
-        constructorMascotas = new ConstructorMascotas(context);
-        mascotas = constructorMascotas.obtenerDatos();
-        mostrarMascotas();
+
     }
 
     @Override
     public void mostrarMascotas() {
-        iRecyclerViewFragment.inicializarAdaptadorRV(iRecyclerViewFragment.crearAdaptador(mascotas));
-        iRecyclerViewFragment.generarLinearLayoutVertical();
-
+        iPerfilFragment.inicializarAdaptadorRV(iPerfilFragment.crearAdaptador(mascotas));
+        iPerfilFragment.generarGridLayout();
     }
 
     @Override
     public void ObtenerMediosRecientes() {
-
         RestApiAdapter restApiAdapter = new RestApiAdapter();
-        Gson gsonMediaRecent = restApiAdapter.construyeGsonDeserializadorMediaRecent();
+        Gson gsonMediaRecent = restApiAdapter.construyeGsonDeserializadorMediaRecentPerfil();
         EndPointsAPI endPointsAPI = restApiAdapter.establecerConexionRestApiInstagram(gsonMediaRecent);
         Call<MascotaResponse> mascotaResponseCall = endPointsAPI.getRecentMedia();
+
 
         mascotaResponseCall.enqueue(new Callback<MascotaResponse>() {
             @Override
@@ -69,5 +65,6 @@ public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPrese
 
             }
         });
+
     }
 }
