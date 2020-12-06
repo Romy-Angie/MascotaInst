@@ -4,7 +4,16 @@ public class UsuarioResponse {
     private String id;
     private String token;
     private String nombre;
+    private int ranking;
+    private String urlfoto;
 
+
+    public UsuarioResponse(String id, String token, String nombre, int ranking, String urlfoto) {
+        this.id = id;
+        this.token = token;
+        this.nombre = nombre;
+        this.ranking = ranking;
+    }
 
     public UsuarioResponse(String id, String token, String nombre) {
         this.id = id;
@@ -37,5 +46,21 @@ public class UsuarioResponse {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(int ranking) {
+        this.ranking = ranking;
+    }
+
+    public String getUrlfoto() {
+        return urlfoto;
+    }
+
+    public void setUrlfoto(String urlfoto) {
+        this.urlfoto = urlfoto;
     }
 }

@@ -24,12 +24,15 @@ public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPrese
     private Context context;
     private ConstructorMascotas constructorMascotas;
     private ArrayList<Mascota> mascotas;
+    private ArrayList<Mascota> mascotas2;
+    private ArrayList<Mascota> mascotas1;
 
     public RecyclerViewFragmentPresenter(IRecyclerViewFragment iRecyclerViewFragment, Context context) {
         this.iRecyclerViewFragment = iRecyclerViewFragment;
         this.context = context;
         //obtenerMascotasBaseDatos();
-        ObtenerMediosRecientes();
+          ObtenerMediosRecientes();
+
     }
 
     @Override
@@ -54,6 +57,7 @@ public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPrese
         EndPointsAPI endPointsAPI = restApiAdapter.establecerConexionRestApiInstagram(gsonMediaRecent);
         Call<MascotaResponse> mascotaResponseCall = endPointsAPI.getRecentMedia();
 
+
         mascotaResponseCall.enqueue(new Callback<MascotaResponse>() {
             @Override
             public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {
@@ -69,5 +73,26 @@ public class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPrese
 
             }
         });
+
+        Call<MascotaResponse> mascotaResponseCall1 = endPointsAPI.getRecentMedia1();
+
+        mascotaResponseCall1.enqueue(new Callback<MascotaResponse>() {
+            @Override
+            public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {
+                MascotaResponse mascotaResponse = response.body();
+                mascotas2 = mascotaResponse.getMascotas();
+                    for(Mascota m : mascotas2){
+                        mascotas.add(m);
+                    }
+                mostrarMascotas();
+            }
+            @Override
+            public void onFailure(Call<MascotaResponse> call, Throwable t) {
+                Toast.makeText(context, "Algo paso durante el establecimiento de conexión", Toast.LENGTH_SHORT).show();
+                Log.e("FALLO LA CONEXIÓN", t.toString());
+            }
+        });
     }
+
+
 }

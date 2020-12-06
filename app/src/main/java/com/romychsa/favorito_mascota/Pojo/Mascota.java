@@ -7,7 +7,7 @@ public class Mascota  {
     private String id;
     private String nombre;
     private String foto;
-    private int ranking= 0;
+    private int ranking;
 
 
 

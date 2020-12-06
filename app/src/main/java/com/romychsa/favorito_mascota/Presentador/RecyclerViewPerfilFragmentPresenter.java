@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.romychsa.favorito_mascota.Fragment.IPerfilFragment;
+import com.romychsa.favorito_mascota.Fragment.PerfilFragment;
 import com.romychsa.favorito_mascota.Pojo.Mascota;
 import com.romychsa.favorito_mascota.RestApi.EndPointsAPI;
 import com.romychsa.favorito_mascota.RestApi.adapter.RestApiAdapter;
@@ -22,13 +23,15 @@ public class RecyclerViewPerfilFragmentPresenter implements IRecyclerViewFragmen
     private IPerfilFragment iPerfilFragment;
     private Context context;
     private ConstructorMascotas constructorMascotas;
-    private ArrayList<Mascota> mascotas;
+    private ArrayList<Mascota> mascotas1;
+    private ArrayList<Mascota> mascotas2;
 
     public RecyclerViewPerfilFragmentPresenter(IPerfilFragment iPerfilFragment, Context context) {
         this.iPerfilFragment = iPerfilFragment;
         this.context = context;
         //obtenerMascotasBaseDatos();
         ObtenerMediosRecientes();
+
     }
 
     @Override
@@ -38,7 +41,7 @@ public class RecyclerViewPerfilFragmentPresenter implements IRecyclerViewFragmen
 
     @Override
     public void mostrarMascotas() {
-        iPerfilFragment.inicializarAdaptadorRV(iPerfilFragment.crearAdaptador(mascotas));
+        iPerfilFragment.inicializarAdaptadorRV(iPerfilFragment.crearAdaptador(mascotas2));
         iPerfilFragment.generarGridLayout();
     }
 
@@ -54,7 +57,7 @@ public class RecyclerViewPerfilFragmentPresenter implements IRecyclerViewFragmen
             @Override
             public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {
                 MascotaResponse mascotaResponse = response.body();
-                mascotas = mascotaResponse.getMascotas();
+                mascotas1 = mascotaResponse.getMascotas();
                 mostrarMascotas();
             }
 
@@ -63,6 +66,23 @@ public class RecyclerViewPerfilFragmentPresenter implements IRecyclerViewFragmen
                 Toast.makeText(context, "Algo paso durante el establecimiento de conexión", Toast.LENGTH_SHORT).show();
                 Log.e("FALLO LA CONEXIÓN", t.toString());
 
+            }
+        });
+
+
+        Call<MascotaResponse> mascotaResponseCall1 = endPointsAPI.getRecentMedia1();
+
+        mascotaResponseCall1.enqueue(new Callback<MascotaResponse>() {
+            @Override
+            public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {
+                MascotaResponse mascotaResponse = response.body();
+                mascotas2 = mascotaResponse.getMascotas();
+                mostrarMascotas();
+            }
+            @Override
+            public void onFailure(Call<MascotaResponse> call, Throwable t) {
+                Toast.makeText(context, "Algo paso durante el establecimiento de conexión", Toast.LENGTH_SHORT).show();
+                Log.e("FALLO LA CONEXIÓN", t.toString());
             }
         });
 

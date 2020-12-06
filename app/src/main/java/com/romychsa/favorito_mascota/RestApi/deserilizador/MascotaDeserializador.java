@@ -13,6 +13,7 @@ import com.romychsa.favorito_mascota.RestApi.model.MascotaResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MascotaDeserializador implements JsonDeserializer<MascotaResponse> {
     @Override
@@ -28,6 +29,7 @@ public class MascotaDeserializador implements JsonDeserializer<MascotaResponse> 
 
     public ArrayList<Mascota> deserializadorMascotaDeJson (JsonArray mascotaResponseData){
         ArrayList<Mascota> mascotas = new ArrayList<>();
+
         //for (int i=0 ; i<mascotaResponseData.size(); i++){
             for (int i=0 ; i<1; i++){
             JsonObject mascotaResponseDataObject = mascotaResponseData.get(i).getAsJsonObject();
@@ -35,10 +37,14 @@ public class MascotaDeserializador implements JsonDeserializer<MascotaResponse> 
             String username = mascotaResponseDataObject.get(JsonKeys.USER_NAME).getAsString();
             String urlFoto = mascotaResponseDataObject.get(JsonKeys.MEDIA_URL).getAsString();
 
+            Random r = new Random();
+            int i1 = r.nextInt(10 - 1) + 1;
+
             Mascota mascotaActual = new Mascota();
             mascotaActual.setId(id);
             mascotaActual.setNombre(username);
             mascotaActual.setFoto(urlFoto);
+            mascotaActual.setRanking(0);
 
             mascotas.add(mascotaActual);
         }

@@ -3,6 +3,7 @@ package com.romychsa.favorito_mascota.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -22,28 +23,36 @@ import com.romychsa.favorito_mascota.Presentador.IRecyclerViewFragmentPresenter;
 import com.romychsa.favorito_mascota.Presentador.RecyclerViewFragmentPresenter;
 import com.romychsa.favorito_mascota.Presentador.RecyclerViewPerfilFragmentPresenter;
 import com.romychsa.favorito_mascota.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 
 public class PerfilFragment extends Fragment implements IPerfilFragment{
 
-    private ArrayList<Mascota> mascotas;
+    public static ArrayList<Mascota> mascotasperfil;
     private RecyclerView listafotosMiMascotas;
     private IRecyclerViewFragmentPresenter presenter;
-
-    public PerfilFragment() {
-
-    }
+    private String nombreUsuario;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null){
+            nombreUsuario = getArguments().getString("nombre", "");
+        }
+        else {
+            nombreUsuario = "";
+        }
+    }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_perfil, container, false);
         CircularImageView circularImageView = (CircularImageView) v.findViewById(R.id.circularImageView);
-
 // Set Color
         circularImageView.setCircleColor(Color.BLACK);
 // or with gradient
@@ -55,17 +64,14 @@ public class PerfilFragment extends Fragment implements IPerfilFragment{
         circularImageView.setShadowColor(Color.BLACK);
         circularImageView.setShadowGravity(CircularImageView.ShadowGravity.BOTTOM);
 
-
         listafotosMiMascotas = (RecyclerView)v.findViewById(R.id.rvMiMascota);
         //GridLayoutManager glm = new GridLayoutManager(getActivity(),3);
        // glm.setOrientation(LinearLayoutManager.VERTICAL);
         presenter = new RecyclerViewPerfilFragmentPresenter(this, getContext());
-        //listafotosMiMascotas.setLayoutManager(glm);
 
+        //listafotosMiMascotas.setLayoutManager(glm);
         //inicializarListaContactos();
         //inicializarAdaptador();
-
-
         return v;
     }
 

@@ -15,6 +15,7 @@
         android:padding="@dimen/cardview_padding"
         >
 
+
         <ImageView
             android:id="@+id/imgMascota"
             android:layout_width="150dp"
@@ -30,7 +31,7 @@
             android:orientation="horizontal"
             >
 
-            <!--
+
             <TextView
                 android:id="@+id/tvRanking"
                 android:layout_width="wrap_content"
@@ -39,7 +40,7 @@
                 android:textSize="12pt"
                 android:layout_marginHorizontal="30dp"
                 />
- -->
+
             <ImageView
                 android:id="@+id/huesoamarillo"
                 android:layout_width="40dp"
@@ -57,3 +58,4 @@
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
+

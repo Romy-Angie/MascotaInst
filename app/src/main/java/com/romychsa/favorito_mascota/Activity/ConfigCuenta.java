@@ -1,10 +1,13 @@
 package com.romychsa.favorito_mascota.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -13,22 +16,36 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.romychsa.favorito_mascota.Adaptador.PerfilMascotaAdaptador;
 import com.romychsa.favorito_mascota.Fragment.PerfilFragment;
+import com.romychsa.favorito_mascota.Pojo.Mascota;
 import com.romychsa.favorito_mascota.R;
 
+import java.util.ArrayList;
+
 public class ConfigCuenta extends AppCompatActivity implements View.OnClickListener {
-    private EditText editTextUsuario;
+    public EditText editTextUsuario;
     private Button btnEnviar;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Actividad en la que se colocar el nombre de usuario y este se confugura según el ususario q se ponga.
         setContentView(R.layout.config_cuenta);
 
         Toolbar miActionBar = (Toolbar)findViewById(R.id.miActionBar);
         setSupportActionBar(miActionBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        editTextUsuario=(EditText)findViewById(R.id.etAgregar);
+        editTextUsuario=findViewById(R.id.etAgregar);
         btnEnviar =(Button)findViewById(R.id.btnEnviar);
-        btnEnviar.setOnClickListener(this);
+
+        btnEnviar.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConfigCuenta.this, PerfilMascotaAdaptador.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -62,7 +79,6 @@ public class ConfigCuenta extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(ConfigCuenta.this, PerfilMascotaAdaptador.class);
-        startActivity(intent);
+
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.mikhaellopez.circularimageview.CircularImageView;
+import com.romychsa.favorito_mascota.Activity.ConfigCuenta;
 import com.romychsa.favorito_mascota.Activity.MainActivity;
+import com.romychsa.favorito_mascota.Fragment.PerfilFragment;
 import com.romychsa.favorito_mascota.Notificaciones.EndPoints;
 import com.romychsa.favorito_mascota.Notificaciones.RestAPI.adapter.RestApiAdapter;
 import com.romychsa.favorito_mascota.Notificaciones.RestAPI.model.UsuarioResponse;
@@ -42,6 +46,7 @@ public class PerfilMascotaAdaptador extends RecyclerView.Adapter<PerfilMascotaAd
     Activity activity;
     public static String CANAL_ID = "canal";
     private static final String TAG = "FIREBASE TOKEN";
+    private String nomUsuario;
 
 
     public PerfilMascotaAdaptador(ArrayList<Mascota> mascotas, Activity activity) {
@@ -50,26 +55,27 @@ public class PerfilMascotaAdaptador extends RecyclerView.Adapter<PerfilMascotaAd
 
     }
 
+
     @NonNull
     @Override
     public PerfilMascotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_miperfil, parent,false);
         return new PerfilMascotaViewHolder(v);
+
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull PerfilMascotaViewHolder perfilmascotaViewHolder, int position) {
         final Mascota mascota = mascotas.get(position);
         //perfilmascotaViewHolder.imgMascota.setImageResource(mascota.getFoto());
-        //perfilmascotaViewHolder.tvRanking.setText(String.valueOf(mascota.getRanking()));
+         perfilmascotaViewHolder.tvRanking.setText(String.valueOf(mascota.getRanking()));
 
-
-        Picasso.get ()
-                .load (mascota.getFoto())
-                .placeholder (R.drawable.ic_action_dog)
-                .error(R.drawable.ic_action_dog)
-                .into(perfilmascotaViewHolder.imgMascota);
-
+            Picasso.get ()
+                    .load (mascota.getFoto())
+                    .placeholder (R.drawable.ic_action_dog)
+                    .error(R.drawable.ic_action_dog)
+                    .into(perfilmascotaViewHolder.imgMascota);
 
     }
 
@@ -83,17 +89,14 @@ public class PerfilMascotaAdaptador extends RecyclerView.Adapter<PerfilMascotaAd
     public static class PerfilMascotaViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView imgMascota;
-
-       // private TextView tvRanking;
+        private TextView tvRanking;
 
         public PerfilMascotaViewHolder(@NonNull View itemView) {
             super(itemView);
             imgMascota =(ImageView) itemView.findViewById(R.id.imgMascota);
-
-           // tvRanking =(TextView)itemView.findViewById(R.id.tvRanking);
+            tvRanking =(TextView)itemView.findViewById(R.id.tvRanking);
 
         }
-
 
     }
 }

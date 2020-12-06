@@ -22,4 +22,7 @@
     <string name="channel_name">canal</string>
     <string name="channel_description">Bienvenido al canal 1</string>
 
+    <string name="nomMascota1">Anmy.dev</string>
+    <string name="nomMascota2">Estrella.chsa</string>
+
 </resources>

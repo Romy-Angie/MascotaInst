@@ -21,6 +21,7 @@
             android:src="@drawable/pet1"
             android:scaleType="centerCrop"
             android:layout_gravity="center_horizontal"
+
             />
 
         <LinearLayout
@@ -29,13 +30,18 @@
             android:orientation="horizontal"
             >
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/btnHuesoblanco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/huesoblanco"
                 android:layout_gravity="center"
+
                 />
+
+              <!--  android:onClick="toqueMascota"
+              -->
+
 
             <TextView
                 android:id="@+id/tvNombre"
@@ -46,15 +52,15 @@
                 android:layout_marginVertical="10dp"
                 />
 
-            <!--
+
             <TextView
                 android:id="@+id/tvRanking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ranking"
                 android:textSize="12pt"
-                android:layout_marginVertical="10dp"
-                android:layout_marginLeft="170dp"
+                android:layout_marginVertical="8dp"
+                android:layout_marginLeft="100dp"
 
                 />
 
@@ -63,10 +69,10 @@
                 android:layout_width="55dp"
                 android:layout_height="60dp"
                 android:src="@mipmap/huesoamarillo"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="3dp"
                 android:layout_gravity="center"
                 />
--->
+
         </LinearLayout>
 
 

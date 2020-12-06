@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public class ConstructorMascotas {
     private static final int LIKE =1;
     private Context context;
+
+
     public  ConstructorMascotas(Context context){ this.context =context;}
 
     public ArrayList<Mascota> obtenerDatos(){

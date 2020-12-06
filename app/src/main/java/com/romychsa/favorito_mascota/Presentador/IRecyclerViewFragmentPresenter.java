@@ -5,4 +5,5 @@ public interface IRecyclerViewFragmentPresenter {
     public void obtenerMascotasBaseDatos();
     public void mostrarMascotas();
     public void ObtenerMediosRecientes();
+
 }

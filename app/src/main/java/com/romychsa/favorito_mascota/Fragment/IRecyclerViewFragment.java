@@ -11,7 +11,6 @@ public interface IRecyclerViewFragment  {
     public void generarGridLayout();
 
     public MascotaAdaptador crearAdaptador(ArrayList<Mascota> mascotas);
-
     public void inicializarAdaptadorRV(MascotaAdaptador adaptador);
 
 
