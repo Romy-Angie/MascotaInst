@@ -1,0 +1,1210 @@
+Index: app/src/main/res/layout/cardview_mascotas.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.cardview.widget.CardView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:id=\"@+id/cvMascota\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"wrap_content\"\r\n    android:layout_marginBottom=\"10dp\"\r\n    app:cardCornerRadius=\"@dimen/cardview_corneradius\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:orientation=\"vertical\"\r\n        android:padding=\"@dimen/cardview_padding\"\r\n        >\r\n\r\n        <ImageView\r\n            android:id=\"@+id/imgMascota\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"@dimen/cardview_height\"\r\n            android:src=\"@drawable/pet1\"\r\n            android:scaleType=\"centerCrop\"\r\n            android:layout_gravity=\"center_horizontal\"\r\n            />\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"horizontal\"\r\n            >\r\n\r\n            <ImageView\r\n                android:id=\"@+id/btnHuesoblanco\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:background=\"@mipmap/huesoblanco\"\r\n                android:layout_gravity=\"center\"\r\n                />\r\n\r\n            <TextView\r\n                android:id=\"@+id/tvNombre\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"@string/name_mascota\"\r\n                android:textSize=\"12pt\"\r\n                android:layout_marginVertical=\"10dp\"\r\n                />\r\n\r\n            <!--\r\n            <TextView\r\n                android:id=\"@+id/tvRanking\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"@string/ranking\"\r\n                android:textSize=\"12pt\"\r\n                android:layout_marginVertical=\"10dp\"\r\n                android:layout_marginLeft=\"170dp\"\r\n\r\n                />\r\n\r\n            <ImageView\r\n                android:id=\"@+id/huesoamarillo\"\r\n                android:layout_width=\"55dp\"\r\n                android:layout_height=\"60dp\"\r\n                android:src=\"@mipmap/huesoamarillo\"\r\n                android:layout_marginLeft=\"4dp\"\r\n                android:layout_gravity=\"center\"\r\n                />\r\n-->\r\n        </LinearLayout>\r\n\r\n\r\n\r\n    </LinearLayout>\r\n\r\n    </androidx.cardview.widget.CardView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/cardview_mascotas.xml	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/res/layout/cardview_mascotas.xml	(date 1607042898169)
+@@ -21,6 +21,7 @@
+             android:src="@drawable/pet1"
+             android:scaleType="centerCrop"
+             android:layout_gravity="center_horizontal"
++
+             />
+ 
+         <LinearLayout
+@@ -29,13 +30,18 @@
+             android:orientation="horizontal"
+             >
+ 
+-            <ImageView
++            <ImageButton
+                 android:id="@+id/btnHuesoblanco"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:background="@mipmap/huesoblanco"
+                 android:layout_gravity="center"
++
+                 />
++
++              <!--  android:onClick="toqueMascota"
++              -->
++
+ 
+             <TextView
+                 android:id="@+id/tvNombre"
+@@ -46,15 +52,15 @@
+                 android:layout_marginVertical="10dp"
+                 />
+ 
+-            <!--
++
+             <TextView
+                 android:id="@+id/tvRanking"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/ranking"
+                 android:textSize="12pt"
+-                android:layout_marginVertical="10dp"
+-                android:layout_marginLeft="170dp"
++                android:layout_marginVertical="8dp"
++                android:layout_marginLeft="100dp"
+ 
+                 />
+ 
+@@ -63,10 +69,10 @@
+                 android:layout_width="55dp"
+                 android:layout_height="60dp"
+                 android:src="@mipmap/huesoamarillo"
+-                android:layout_marginLeft="4dp"
++                android:layout_marginLeft="3dp"
+                 android:layout_gravity="center"
+                 />
+--->
++
+         </LinearLayout>
+ 
+ 
+Index: app/src/main/java/com/romychsa/favorito_mascota/Activity/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Activity;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport androidx.appcompat.widget.Toolbar;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\nimport androidx.viewpager.widget.ViewPager;\r\n\r\nimport android.app.NotificationChannel;\r\nimport android.app.NotificationManager;\r\nimport android.content.Intent;\r\nimport android.os.Build;\r\nimport android.os.Bundle;\r\nimport android.os.Parcelable;\r\nimport android.util.Log;\r\nimport android.view.Menu;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.android.material.tabs.TabLayout;\r\nimport com.google.firebase.iid.FirebaseInstanceId;\r\nimport com.google.firebase.iid.InstanceIdResult;\r\nimport com.romychsa.favorito_mascota.Adaptador.MascotaAdaptador;\r\nimport com.romychsa.favorito_mascota.Adaptador.PageAdapter;\r\nimport com.romychsa.favorito_mascota.Adaptador.PerfilMascotaAdaptador;\r\nimport com.romychsa.favorito_mascota.Fragment.PerfilFragment;\r\nimport com.romychsa.favorito_mascota.Fragment.RecyclerViewFragment;\r\nimport com.romychsa.favorito_mascota.Notificaciones.EndPoints;\r\nimport com.romychsa.favorito_mascota.Notificaciones.RestAPI.adapter.RestApiAdapter;\r\nimport com.romychsa.favorito_mascota.Notificaciones.RestAPI.model.UsuarioResponse;\r\nimport com.romychsa.favorito_mascota.Pojo.Mascota;\r\nimport com.romychsa.favorito_mascota.R;\r\n\r\nimport java.util.ArrayList;\r\n\r\nimport retrofit2.Call;\r\nimport retrofit2.Callback;\r\nimport retrofit2.Response;\r\n\r\npublic  class MainActivity extends AppCompatActivity {\r\n\r\n    public  static ArrayList<Mascota> mascotas;\r\n    private RecyclerView listaMascotas;\r\n    private Toolbar toolbar;\r\n    private TabLayout tabLayout;\r\n    private ViewPager viewPager;\r\n    public  String username;\r\n    public static String CANAL_ID = \"canal\";\r\n    private static final String TAG = \"FIREBASE TOKEN\";\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n        createNotificationChannel();\r\n\r\n        Toolbar miActionBar = (Toolbar)findViewById(R.id.miActionBar);\r\n        setSupportActionBar(miActionBar);\r\n\r\n\r\n        toolbar =(Toolbar)findViewById(R.id.toolbar);\r\n        tabLayout =(TabLayout)findViewById(R.id.tabLayout);\r\n        viewPager =(ViewPager)findViewById(R.id.viewPager);\r\n        setUpViewPager();\r\n\r\n        if(toolbar != null){\r\n            setSupportActionBar(toolbar);\r\n        }\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n    public void lanzarNotificacion(){\r\n        FirebaseInstanceId.getInstance().getInstanceId()\r\n                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {\r\n                    @Override\r\n                    public void onComplete(@NonNull Task<InstanceIdResult> task) {\r\n                        if (!task.isSuccessful()) {\r\n                            Log.w(TAG, \"getInstanceId failed\", task.getException());\r\n                            return;\r\n                        }\r\n                        // Get new Instance ID token\r\n                        String token = task.getResult().getToken();\r\n\r\n                        // Log and toast\r\n                        String msg = getString(R.string.msg_token_fmt, token);\r\n                        Log.d(TAG, msg);\r\n                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();\r\n                        enviarRegistro(token);\r\n\r\n                    }\r\n                });\r\n    }\r\n\r\n    private void enviarRegistro(String token){\r\n\r\n        Mascota mascota = mascotas.get(0);\r\n        username = mascota.getNombre();\r\n\r\n        Log.d(\"TOKEN\", token);\r\n        Log.d(\"USER\", username);\r\n\r\n        RestApiAdapter restApiAdapter = new RestApiAdapter();\r\n        EndPoints endPoints = restApiAdapter.establecerConexionRestAPI();\r\n        Call<UsuarioResponse> usuarioResponseCall = endPoints.registrarUsuario(token, username);\r\n\r\n\r\n        usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {\r\n            @Override\r\n            public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {\r\n                UsuarioResponse usuarioResponse = response.body();\r\n                Log.d(\"ID_FIREBASE\", usuarioResponse.getId());\r\n                Log.d(\"TOKEN_FIREBASE\", usuarioResponse.getToken());\r\n                Log.d(\"USER_NAME\", usuarioResponse.getNombre());\r\n            }\r\n\r\n            @Override\r\n            public void onFailure(Call<UsuarioResponse> call, Throwable t) {\r\n\r\n            }\r\n        });\r\n    }\r\n\r\n    private void createNotificationChannel() {\r\n        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {\r\n            CharSequence name = getString(R.string.channel_name);\r\n            String description = getString(R.string.channel_description);\r\n            int importance = NotificationManager.IMPORTANCE_DEFAULT;\r\n            NotificationChannel channel = new NotificationChannel(CANAL_ID, name, importance);\r\n\r\n            //opcional\r\n            channel.setDescription(description);\r\n\r\n            NotificationManager notificationManager = getSystemService(NotificationManager.class);\r\n            notificationManager.createNotificationChannel(channel);\r\n        }\r\n    }\r\n\r\n\r\n    public boolean onCreateOptionsMenu(Menu menu){\r\n        getMenuInflater().inflate(R.menu.menu_items, menu);\r\n        return true;\r\n\r\n    }\r\n\r\n     @Override\r\n     public boolean onOptionsItemSelected(MenuItem item){\r\n        int id = item.getItemId();\r\n\r\n        switch (item.getItemId()){\r\n            case R.id.mContacto:\r\n                Intent i = new Intent(this, Contacto.class);\r\n                startActivity(i);\r\n                break;\r\n            case R.id.mAcerca:\r\n                Intent j = new Intent(this, AcercaDe.class);\r\n                startActivity(j);\r\n                break;\r\n\r\n            case R.id.mConfigCuenta:\r\n                Intent h = new Intent(this, ConfigCuenta.class);\r\n                startActivity(h);\r\n                break;\r\n\r\n            case R.id.mNotificacion:\r\n                lanzarNotificacion();\r\n\r\n                break;\r\n\r\n            case R.id.action_favorito:\r\n                Intent intent = new Intent(MainActivity.this, MascotaFavorita.class);\r\n\r\n                /*\r\n                Bundle bundle = new Bundle();\r\n                bundle.putParcelableArrayList(\"lista\", mascotas);\r\n                intent.putExtras(bundle);\r\n\r\n                */\r\n                startActivity(intent);\r\n                break;\r\n\r\n        }\r\n\r\n         return super.onOptionsItemSelected(item);\r\n    }\r\n\r\n    private ArrayList<Fragment> agregarFragments(){\r\n        ArrayList<Fragment> fragments = new ArrayList<>();\r\n\r\n        fragments.add(new RecyclerViewFragment());\r\n        fragments.add(new PerfilFragment());\r\n\r\n        return fragments;\r\n    }\r\n\r\n    private void setUpViewPager(){\r\n        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), agregarFragments()));\r\n        tabLayout.setupWithViewPager(viewPager);\r\n\r\n        tabLayout.getTabAt(0).setIcon(R.drawable.ic_house);\r\n        tabLayout.getTabAt(1).setIcon(R.drawable.ic_dog);\r\n\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Activity/MainActivity.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Activity/MainActivity.java	(date 1607218551426)
+@@ -51,9 +51,21 @@
+     private TabLayout tabLayout;
+     private ViewPager viewPager;
+     public  String username;
++    public  String urlfoto;
+     public static String CANAL_ID = "canal";
+     private static final String TAG = "FIREBASE TOKEN";
+ 
++    private static String ID_DISPOSITIVO_CAT = "-MNpWG_1zrRTk2mo4mvg";
++    private static String ID_DISPOSITIVO_DOG = "-MNpVKNUDGo-tPAh9jiR";
++
++    private static String ID_DISPOSITIVO_NEW;
++
++    public static String MASCOTA_RECEPTOR_CAT ="estrella.chsa";
++    public static String MASCOTA_RECEPTOR_DOG ="anmy.dev";
++    public static String MASCOTA_EMISOR_CAT="estrella.chsa";
++    public static String MASCOTA_EMISOR_DOG="anmy.dev";
++
++
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+@@ -73,15 +85,9 @@
+             setSupportActionBar(toolbar);
+         }
+ 
+-
+-
+-
+     }
+ 
+-
+-
+-
+-    public void lanzarNotificacion(){
++    public void lanzarNotificacion(String urlfoto){
+         FirebaseInstanceId.getInstance().getInstanceId()
+                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                     @Override
+@@ -94,10 +100,13 @@
+                         String token = task.getResult().getToken();
+ 
+                         // Log and toast
++/*
+                         String msg = getString(R.string.msg_token_fmt, token);
+                         Log.d(TAG, msg);
+                         Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+-                        enviarRegistro(token);
++
++ */
++                        enviarRegistroLike(token, urlfoto);
+ 
+                     }
+                 });
+@@ -107,13 +116,14 @@
+ 
+         Mascota mascota = mascotas.get(0);
+         username = mascota.getNombre();
++        urlfoto = mascota.getFoto();
+ 
+         Log.d("TOKEN", token);
+         Log.d("USER", username);
+ 
+         RestApiAdapter restApiAdapter = new RestApiAdapter();
+         EndPoints endPoints = restApiAdapter.establecerConexionRestAPI();
+-        Call<UsuarioResponse> usuarioResponseCall = endPoints.registrarUsuario(token, username);
++        Call<UsuarioResponse> usuarioResponseCall = endPoints.registrarUsuario(token, username, 1, urlfoto);
+ 
+ 
+         usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
+@@ -132,6 +142,30 @@
+         });
+     }
+ 
++
++
++    private void enviarRegistroLike(String token, String urlfoto){
++
++        RestApiAdapter restApiAdapter = new RestApiAdapter();
++        EndPoints endPoints = restApiAdapter.establecerConexionRestAPI();
++        Call<UsuarioResponse> usuarioResponseCall = endPoints.registrarUsuario(token, MASCOTA_RECEPTOR_DOG, 1, urlfoto);
++
++        usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
++            @Override
++            public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
++                UsuarioResponse usuarioResponse = response.body();
++                Log.d("ID_FIREBASE", usuarioResponse.getId());
++                Log.d("TOKEN_FIREBASE", usuarioResponse.getToken());
++                Log.d("USER_NAME", usuarioResponse.getNombre());
++            }
++
++            @Override
++            public void onFailure(Call<UsuarioResponse> call, Throwable t) {
++
++            }
++        });
++    }
++
+     private void createNotificationChannel() {
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+             CharSequence name = getString(R.string.channel_name);
+@@ -148,6 +182,53 @@
+     }
+ 
+ 
++    public void toqueDOG(View v){
++        Log.d("TOQUE_MASCOTA", "true");
++        final UsuarioResponse usuarioResponse = new UsuarioResponse(ID_DISPOSITIVO_DOG, "123", MASCOTA_RECEPTOR_DOG);
++        RestApiAdapter restApiAdapter = new RestApiAdapter();
++        EndPoints endPoints = restApiAdapter.establecerConexionRestAPI();
++        Call<UsuarioResponse> usuarioResponseCall = endPoints.toqueAMascota(usuarioResponse.getId(), MASCOTA_EMISOR_CAT);
++        usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
++            @Override
++            public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
++                UsuarioResponse usuarioResponse1 = response.body();
++                Log.d("ID_FIREBASE", usuarioResponse1.getId());
++                Log.d("TOKEN_FIREBASE", usuarioResponse1.getToken());
++                Log.d("ANIMAL_FIREBASE", usuarioResponse1.getNombre());
++            }
++
++            @Override
++            public void onFailure(Call<UsuarioResponse> call, Throwable t) {
++
++            }
++        });
++
++    }
++
++    public void toqueCAT(View v){
++        Log.d("TOQUE_MASCOTA", "true");
++        final UsuarioResponse usuarioResponse = new UsuarioResponse(ID_DISPOSITIVO_CAT, "123", MASCOTA_RECEPTOR_CAT);
++        RestApiAdapter restApiAdapter = new RestApiAdapter();
++        EndPoints endPoints = restApiAdapter.establecerConexionRestAPI();
++        Call<UsuarioResponse> usuarioResponseCall = endPoints.toqueAMascota(usuarioResponse.getId(), MASCOTA_EMISOR_DOG);
++        usuarioResponseCall.enqueue(new Callback<UsuarioResponse>() {
++            @Override
++            public void onResponse(Call<UsuarioResponse> call, Response<UsuarioResponse> response) {
++                UsuarioResponse usuarioResponse1 = response.body();
++                Log.d("ID_FIREBASE", usuarioResponse1.getId());
++                Log.d("TOKEN_FIREBASE", usuarioResponse1.getToken());
++                Log.d("ANIMAL_FIREBASE", usuarioResponse1.getNombre());
++            }
++
++            @Override
++            public void onFailure(Call<UsuarioResponse> call, Throwable t) {
++
++            }
++        });
++
++    }
++
++
+     public boolean onCreateOptionsMenu(Menu menu){
+         getMenuInflater().inflate(R.menu.menu_items, menu);
+         return true;
+@@ -174,7 +255,7 @@
+                 break;
+ 
+             case R.id.mNotificacion:
+-                lanzarNotificacion();
++               // lanzarNotificacion();
+ 
+                 break;
+ 
+@@ -197,7 +278,7 @@
+ 
+     private ArrayList<Fragment> agregarFragments(){
+         ArrayList<Fragment> fragments = new ArrayList<>();
+-
++ //Habilita los dos fragment (lista de mascotas y perfil de usuario)
+         fragments.add(new RecyclerViewFragment());
+         fragments.add(new PerfilFragment());
+ 
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.romychsa.favorito_mascota\">\r\n    <uses-permission android:name=\"android.permission.INTERNET\"/>\r\n\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\">\r\n        <activity android:name=\".Activity.AcercaDe\"\r\n            android:parentActivityName=\".Activity.MainActivity\"\r\n            >\r\n            <meta-data\r\n                android:name=\"android.support.PARENT_ACTIVITY\"\r\n                android:value=\".Activity.MainActivity\" />\r\n        </activity>\r\n        <activity android:name=\".Activity.Contacto\"\r\n            android:parentActivityName=\".Activity.MainActivity\"\r\n            >\r\n            <meta-data\r\n                android:name=\"android.support.PARENT_ACTIVITY\"\r\n                android:value=\".Activity.MainActivity\" />\r\n        </activity>\r\n        <activity android:name=\".Activity.ConfigCuenta\"\r\n            android:parentActivityName=\".Activity.MainActivity\"\r\n            >\r\n            <meta-data\r\n                android:name=\"android.support.PARENT_ACTIVITY\"\r\n                android:value=\".Activity.MainActivity\" />\r\n        </activity>\r\n        <activity android:name=\".Activity.MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity\r\n            android:name=\".Activity.MascotaFavorita\"\r\n            android:parentActivityName=\".Activity.MainActivity\">\r\n            <meta-data\r\n                android:name=\"android.support.PARENT_ACTIVITY\"\r\n                android:value=\".Activity.MainActivity\" />\r\n        </activity>\r\n\r\n        <service android:name=\".Notificaciones.NotificationIDToken\"\r\n            android:exported=\"false\">\r\n            <intent-filter>\r\n                <action android:name=\"com.google.firebase.INSTANCE_ID_EVENT\"/>\r\n            </intent-filter>\r\n        </service>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/AndroidManifest.xml	(date 1606945364711)
+@@ -32,9 +32,9 @@
+                 android:name="android.support.PARENT_ACTIVITY"
+                 android:value=".Activity.MainActivity" />
+         </activity>
+-        <activity android:name=".Activity.MainActivity">
++        <activity android:name=".Activity.MainActivity" >
+             <intent-filter>
+-                <action android:name="android.intent.action.MAIN" />
++               <action android:name="android.intent.action.MAIN" />
+ 
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+Index: app/src/main/java/com/romychsa/favorito_mascota/Adaptador/MascotaAdaptador.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Adaptador;\r\n\r\nimport android.app.Activity;\r\nimport android.content.Intent;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.romychsa.favorito_mascota.Activity.Contacto;\r\nimport com.romychsa.favorito_mascota.Activity.MainActivity;\r\nimport com.romychsa.favorito_mascota.Pojo.Mascota;\r\nimport com.romychsa.favorito_mascota.R;\r\nimport com.romychsa.favorito_mascota.db.ConstructorMascotas;\r\nimport com.squareup.picasso.Picasso;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.MascotaViewHolder> {\r\n    ArrayList<Mascota> mascotas;\r\n    Activity activity;\r\n\r\n\r\n    public MascotaAdaptador(ArrayList<Mascota> mascotas, Activity activity){\r\n        this.mascotas =mascotas;\r\n        this.activity = activity;\r\n\r\n\r\n\r\n    }\r\n\r\n    @NonNull\r\n    @Override\r\n    public MascotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\r\n        View v =LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_mascotas,parent, false);\r\n        return new MascotaViewHolder(v);\r\n\r\n    }\r\n\r\n    @Override\r\n    public void onBindViewHolder(@NonNull final MascotaViewHolder mascotaViewHolder, int position) {\r\n        final Mascota mascota = mascotas.get(position);\r\n        Picasso.get ()\r\n                .load (mascota.getFoto())\r\n                .placeholder (R.drawable.ic_action_dog)\r\n                .error(R.drawable.ic_action_dog)\r\n                .into(mascotaViewHolder.imgMascota);\r\n        mascotaViewHolder.tvNombre.setText(mascota.getNombre());\r\n        MainActivity.mascotas = mascotas;\r\n\r\n\r\n\r\n        //mascotaViewHolder.imgMascota.setImageResource(mascota.getFoto());\r\n        //mascotaViewHolder.tvRanking.setText(String.valueOf(mascota.getRanking()));\r\n\r\n       //Darle like a la mascota\r\n      /* mascotaViewHolder.btnHuesoblanco.setOnClickListener(new View.OnClickListener() {\r\n           @Override\r\n           public void onClick(View view) {\r\n               Toast.makeText(activity, \"Me gusta \" + mascota.getNombre(), Toast.LENGTH_SHORT).show();\r\n\r\n               ConstructorMascotas constructorMascotas = new ConstructorMascotas(activity);\r\n               constructorMascotas.darLike(mascota);\r\n               mascotaViewHolder.tvRanking.setText(String.valueOf(constructorMascotas.obtenerLikesMascota(mascota)));\r\n\r\n           }\r\n       });*/\r\n\r\n\r\n    }\r\n\r\n    @Override\r\n    public int getItemCount() {\r\n        return mascotas.size();\r\n    }\r\n\r\n\r\n    public static class MascotaViewHolder extends RecyclerView.ViewHolder{\r\n\r\n        private ImageView imgMascota;\r\n        private TextView tvNombre;\r\n         /*  private TextView tvRanking;\r\n           private ImageButton btnHuesoblanco;\r\n*/\r\n        public MascotaViewHolder(@NonNull View itemView) {\r\n            super(itemView);\r\n            imgMascota =(ImageView) itemView.findViewById(R.id.imgMascota);\r\n            tvNombre =(TextView)itemView.findViewById(R.id.tvNombre);\r\n            //tvRanking =(TextView)itemView.findViewById(R.id.tvRanking);\r\n            //btnHuesoblanco =(ImageButton)itemView.findViewById(R.id.btnHuesoblanco);\r\n\r\n        }\r\n\r\n\r\n    }\r\n\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Adaptador/MascotaAdaptador.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Adaptador/MascotaAdaptador.java	(date 1607219499249)
+@@ -2,6 +2,7 @@
+ 
+ import android.app.Activity;
+ import android.content.Intent;
++import android.util.Log;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
+@@ -15,24 +16,31 @@
+ 
+ import com.romychsa.favorito_mascota.Activity.Contacto;
+ import com.romychsa.favorito_mascota.Activity.MainActivity;
++import com.romychsa.favorito_mascota.Notificaciones.EndPoints;
++import com.romychsa.favorito_mascota.Notificaciones.RestAPI.adapter.RestApiAdapter;
++import com.romychsa.favorito_mascota.Notificaciones.RestAPI.model.UsuarioResponse;
+ import com.romychsa.favorito_mascota.Pojo.Mascota;
+ import com.romychsa.favorito_mascota.R;
++import com.romychsa.favorito_mascota.RestApi.deserilizador.MascotaDeserializador;
++import com.romychsa.favorito_mascota.RestApi.deserilizador.MascotaDeserializadorPerfil;
+ import com.romychsa.favorito_mascota.db.ConstructorMascotas;
+ import com.squareup.picasso.Picasso;
+ 
+ import java.util.ArrayList;
++import java.util.Random;
++
++import retrofit2.Call;
++import retrofit2.Callback;
++import retrofit2.Response;
+ 
+ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.MascotaViewHolder> {
+     ArrayList<Mascota> mascotas;
+     Activity activity;
+-
++    int likesMascota;
+ 
+     public MascotaAdaptador(ArrayList<Mascota> mascotas, Activity activity){
+-        this.mascotas =mascotas;
++        this.mascotas = mascotas;
+         this.activity = activity;
+-
+-
+-
+     }
+ 
+     @NonNull
+@@ -45,6 +53,7 @@
+ 
+     @Override
+     public void onBindViewHolder(@NonNull final MascotaViewHolder mascotaViewHolder, int position) {
++        //Se agarra un arraylist de objetos mascota y de cada uno se saca la foto y nombre.
+         final Mascota mascota = mascotas.get(position);
+         Picasso.get ()
+                 .load (mascota.getFoto())
+@@ -52,9 +61,25 @@
+                 .error(R.drawable.ic_action_dog)
+                 .into(mascotaViewHolder.imgMascota);
+         mascotaViewHolder.tvNombre.setText(mascota.getNombre());
++        mascotaViewHolder.tvRanking.setText(String.valueOf(mascota.getRanking()));
+         MainActivity.mascotas = mascotas;
++        mascotaViewHolder.btnHuesoblanco.setOnClickListener(new View.OnClickListener() {
++
++            @Override
++            public void onClick(View v) {
+ 
++                Toast.makeText(activity, "Me gusta " + mascota.getNombre(), Toast.LENGTH_SHORT).show();
++                int ranking = mascota.getRanking() +1;
++                String urlfoto = mascota.getFoto();
++                mascotaViewHolder.tvRanking.setText(String.valueOf(ranking));
+ 
++                MainActivity mainActivity = new MainActivity();
++                mainActivity.lanzarNotificacion(urlfoto);
++                mainActivity.toqueDOG(v);
++
++
++            }
++        });
+ 
+         //mascotaViewHolder.imgMascota.setImageResource(mascota.getFoto());
+         //mascotaViewHolder.tvRanking.setText(String.valueOf(mascota.getRanking()));
+@@ -73,6 +98,8 @@
+        });*/
+ 
+ 
++
++
+     }
+ 
+     @Override
+@@ -85,15 +112,15 @@
+ 
+         private ImageView imgMascota;
+         private TextView tvNombre;
+-         /*  private TextView tvRanking;
+-           private ImageButton btnHuesoblanco;
+-*/
++        private TextView tvRanking;
++        private ImageButton btnHuesoblanco;
++
+         public MascotaViewHolder(@NonNull View itemView) {
+             super(itemView);
+             imgMascota =(ImageView) itemView.findViewById(R.id.imgMascota);
+             tvNombre =(TextView)itemView.findViewById(R.id.tvNombre);
+-            //tvRanking =(TextView)itemView.findViewById(R.id.tvRanking);
+-            //btnHuesoblanco =(ImageButton)itemView.findViewById(R.id.btnHuesoblanco);
++            tvRanking =(TextView)itemView.findViewById(R.id.tvRanking);
++            btnHuesoblanco =(ImageButton)itemView.findViewById(R.id.btnHuesoblanco);
+ 
+         }
+ 
+Index: app/src/main/java/com/romychsa/favorito_mascota/Notificaciones/EndPoints.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Notificaciones;\r\n\r\nimport com.romychsa.favorito_mascota.Notificaciones.RestAPI.model.UsuarioResponse;\r\n\r\nimport retrofit2.Call;\r\nimport retrofit2.http.Field;\r\nimport retrofit2.http.FormUrlEncoded;\r\nimport retrofit2.http.POST;\r\n\r\npublic interface EndPoints {\r\n    @FormUrlEncoded\r\n    @POST(ConstantesRestAPI.KEY_POST_ID_TOKEN)\r\n    Call<UsuarioResponse> registrarUsuario(@Field(\"token\") String token, @Field(\"nombre\") String nombre);\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Notificaciones/EndPoints.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Notificaciones/EndPoints.java	(date 1606937116911)
+@@ -1,15 +1,22 @@
+ package com.romychsa.favorito_mascota.Notificaciones;
+ 
+ import com.romychsa.favorito_mascota.Notificaciones.RestAPI.model.UsuarioResponse;
++import com.romychsa.favorito_mascota.RestApi.ConstantesRestApi;
+ 
+ import retrofit2.Call;
+ import retrofit2.http.Field;
+ import retrofit2.http.FormUrlEncoded;
++import retrofit2.http.GET;
+ import retrofit2.http.POST;
++import retrofit2.http.Path;
+ 
+ public interface EndPoints {
+     @FormUrlEncoded
+     @POST(ConstantesRestAPI.KEY_POST_ID_TOKEN)
+-    Call<UsuarioResponse> registrarUsuario(@Field("token") String token, @Field("nombre") String nombre);
++    Call<UsuarioResponse> registrarUsuario(@Field("token") String token, @Field("nombre") String nombre, @Field("ranking") int ranking, @Field("urlfoto") String urlfoto);
++
++
++    @GET(ConstantesRestAPI.KEY_TOQUE_MASCOTA)
++    Call<UsuarioResponse> toqueAMascota(@Path("id") String id, @Path("nombre") String nombre);
+ 
+ }
+Index: app/src/main/java/com/romychsa/favorito_mascota/Pojo/Mascota.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Pojo;\r\n\r\nimport android.os.Parcel;\r\nimport android.os.Parcelable;\r\n\r\npublic class Mascota  {\r\n    private String id;\r\n    private String nombre;\r\n    private String foto;\r\n    private int ranking= 0;\r\n\r\n\r\n\r\n    public Mascota(String id, String nombre, String foto, int ranking) {\r\n        this.id = id;\r\n        this.nombre = nombre;\r\n        this.foto = foto;\r\n        this.ranking = ranking;\r\n    }\r\n\r\n\r\n    public Mascota( String nombre, String foto, int ranking) {\r\n\r\n        this.nombre = nombre;\r\n        this.foto = foto;\r\n        this.ranking = ranking;\r\n    }\r\n\r\n    public Mascota(){\r\n\r\n    }\r\n\r\n    public String getNombre() {\r\n        return nombre;\r\n    }\r\n\r\n    public void setNombre(String nombre) {\r\n        this.nombre = nombre;\r\n    }\r\n\r\n    public String getFoto() {\r\n        return foto;\r\n    }\r\n\r\n    public void setFoto(String foto) {\r\n        this.foto = foto;\r\n    }\r\n\r\n    public int getRanking() {\r\n        return ranking;\r\n    }\r\n\r\n    public void setRanking(int ranking) {\r\n        this.ranking = ranking;\r\n    }\r\n\r\n    public String getId() { return id; }\r\n\r\n    public void setId(String id) { this.id = id; }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Pojo/Mascota.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Pojo/Mascota.java	(date 1606321617293)
+@@ -7,7 +7,7 @@
+     private String id;
+     private String nombre;
+     private String foto;
+-    private int ranking= 0;
++    private int ranking;
+ 
+ 
+ 
+Index: app/src/main/java/com/romychsa/favorito_mascota/db/ConstructorMascotas.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.db;\r\n\r\nimport android.content.ContentValues;\r\nimport android.content.Context;\r\n\r\nimport com.romychsa.favorito_mascota.Activity.Contacto;\r\nimport com.romychsa.favorito_mascota.Pojo.Mascota;\r\nimport com.romychsa.favorito_mascota.R;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class ConstructorMascotas {\r\n    private static final int LIKE =1;\r\n    private Context context;\r\n    public  ConstructorMascotas(Context context){ this.context =context;}\r\n\r\n    public ArrayList<Mascota> obtenerDatos(){\r\n        BaseDatos db = new BaseDatos(context);\r\n        insertarMascotas(db);\r\n        return db.obtenerTodasLasMascotas();\r\n\r\n    }\r\n\r\n    public void insertarMascotas(BaseDatos db){\r\n        ContentValues contentValues = new ContentValues();\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_NOMBRE, \"Lucho\");\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_FOTO, R.drawable.pet1);\r\n\r\n        db.insertarMascota(contentValues);\r\n\r\n        contentValues = new ContentValues();\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_NOMBRE, \"Rocky\");\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_FOTO, R.drawable.pet2);\r\n\r\n        db.insertarMascota(contentValues);\r\n\r\n        contentValues = new ContentValues();\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_NOMBRE, \"Silvestre\");\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_FOTO, R.drawable.pet3);\r\n\r\n        db.insertarMascota(contentValues);\r\n\r\n        contentValues = new ContentValues();\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_NOMBRE, \"Sisi\");\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_FOTO, R.drawable.pet5);\r\n\r\n        db.insertarMascota(contentValues);\r\n\r\n        contentValues = new ContentValues();\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_NOMBRE, \"Estrella\");\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_FOTO, R.drawable.pet6);\r\n\r\n        db.insertarMascota(contentValues);\r\n\r\n        contentValues = new ContentValues();\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_NOMBRE, \"Doggy\");\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_FOTO, R.drawable.pet7);\r\n\r\n        db.insertarMascota(contentValues);\r\n\r\n        contentValues = new ContentValues();\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_NOMBRE, \"Sami\");\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_FOTO, R.drawable.pet8);\r\n\r\n        db.insertarMascota(contentValues);\r\n\r\n        contentValues = new ContentValues();\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_NOMBRE, \"Ricky\");\r\n        contentValues.put(ConstantesBaseDatos.TABLE_MASCOTAS_FOTO, R.drawable.pet9);\r\n\r\n        db.insertarMascota(contentValues);\r\n    }\r\n\r\n    public void darLike(Mascota mascota){\r\n        BaseDatos db = new BaseDatos(context);\r\n        ContentValues contentValues = new ContentValues();\r\n        contentValues.put(ConstantesBaseDatos.TABLE_LIKES_MASCOTA_ID_MASCOTA, mascota.getId());\r\n        contentValues.put(ConstantesBaseDatos.TABLE_LIKES_MASCOTA_NUMERO_LIKES, LIKE);\r\n        db.insertarLikeMascota(contentValues);\r\n    }\r\n\r\n    public  int obtenerLikesMascota(Mascota mascota){\r\n        BaseDatos db = new BaseDatos(context);\r\n        return db.obtenerLikesMascotas(mascota);\r\n    }\r\n\r\n    public ArrayList<Mascota> obtenerFavoritoMascota(){\r\n        BaseDatos db = new BaseDatos(context);\r\n        ArrayList<Integer> Idmascota = db.obtenerIdCincoFavoritos();\r\n        ArrayList<Mascota> fmascota = db.obtenerCincoFavoritos(Idmascota);\r\n        return fmascota;\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/db/ConstructorMascotas.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/db/ConstructorMascotas.java	(date 1605641347880)
+@@ -12,6 +12,8 @@
+ public class ConstructorMascotas {
+     private static final int LIKE =1;
+     private Context context;
++
++
+     public  ConstructorMascotas(Context context){ this.context =context;}
+ 
+     public ArrayList<Mascota> obtenerDatos(){
+Index: app/src/main/java/com/romychsa/favorito_mascota/RestApi/EndPointsAPI.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.RestApi;\r\n\r\nimport com.romychsa.favorito_mascota.RestApi.model.MascotaResponse;\r\n\r\nimport retrofit2.Call;\r\nimport retrofit2.http.GET;\r\n\r\npublic interface EndPointsAPI {\r\n\r\n @GET(ConstantesRestApi.URL_GET_RECENT_MEDIA_USER)\r\n    Call<MascotaResponse> getRecentMedia();\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/RestApi/EndPointsAPI.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/RestApi/EndPointsAPI.java	(date 1605637939990)
+@@ -3,6 +3,7 @@
+ import com.romychsa.favorito_mascota.RestApi.model.MascotaResponse;
+ 
+ import retrofit2.Call;
++import retrofit2.http.Field;
+ import retrofit2.http.GET;
+ 
+ public interface EndPointsAPI {
+@@ -10,5 +11,8 @@
+  @GET(ConstantesRestApi.URL_GET_RECENT_MEDIA_USER)
+     Call<MascotaResponse> getRecentMedia();
+ 
++ @GET(ConstantesRestApi.URL_GET_RECENT_MEDIA_USER_2)
++    Call<MascotaResponse> getRecentMedia1();
++
+ }
+ 
+Index: app/src/main/java/com/romychsa/favorito_mascota/RestApi/ConstantesRestApi.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.RestApi;\r\n\r\npublic class ConstantesRestApi {\r\n    public static final String COD_USER_PERMISSION = \"/me/\";\r\n    public static final String URL_BASIC_GRAPH = \"https://graph.instagram.com\" + COD_USER_PERMISSION;\r\n    public static final String TYPE_ACCION_PERMISSION = \"media?fields=\";\r\n    public static final String TYPES_ACCESS_MEDIA = \"id,media_url,caption,timestamp,media_type,permalink,thumbnail_url,username\";\r\n    public static final String ASK_FOR_ACCESS_TOKEN= \"&access_token=\";\r\n    public static final String ACCESS_TOKEN = \"IGQVJVSlZAIYWZANaW1aMjhjeU9NcTdZAUUdCdlpfSDFJUmJpZAkZAKRVJuZAzdFTm9FckhMUGRGRHFURnFBekFRZAHZAwb01VMkpvb3pGOTAxd2hvTW9MZAFZA2bExrTUNhRm9TdFdxNUl4YmcwaVJvRC0xeWwzMQZDZD\";\r\n    //public static final String ACCESS_TOKEN_2 = \"IGQVJYbGVmSEtLTGxCREVicVV5aGx3Rl9FWmV1VFYzZAXYzUVZAhY1hGZAHUxLVVvTVBWdmktWTVKYjJnOTI1VjJjNm5OVEhaMVlIc2pHb0pJeHVDRGJCdWMtSWxwQnEtWWxRWFUzaEpn\";\r\n    public static final String URL_GET_RECENT_MEDIA_USER = URL_BASIC_GRAPH + TYPE_ACCION_PERMISSION + TYPES_ACCESS_MEDIA + ASK_FOR_ACCESS_TOKEN + ACCESS_TOKEN ;\r\n\r\n\r\n    //https://graph.instagram.com/me/media?fields=id,media_url,caption,timestamp,media_type,permalink,thumbnail_url,username&access_token={poner access-token}\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/RestApi/ConstantesRestApi.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/RestApi/ConstantesRestApi.java	(date 1606148594206)
+@@ -6,10 +6,10 @@
+     public static final String TYPE_ACCION_PERMISSION = "media?fields=";
+     public static final String TYPES_ACCESS_MEDIA = "id,media_url,caption,timestamp,media_type,permalink,thumbnail_url,username";
+     public static final String ASK_FOR_ACCESS_TOKEN= "&access_token=";
+-    public static final String ACCESS_TOKEN = "IGQVJVSlZAIYWZANaW1aMjhjeU9NcTdZAUUdCdlpfSDFJUmJpZAkZAKRVJuZAzdFTm9FckhMUGRGRHFURnFBekFRZAHZAwb01VMkpvb3pGOTAxd2hvTW9MZAFZA2bExrTUNhRm9TdFdxNUl4YmcwaVJvRC0xeWwzMQZDZD";
+-    //public static final String ACCESS_TOKEN_2 = "IGQVJYbGVmSEtLTGxCREVicVV5aGx3Rl9FWmV1VFYzZAXYzUVZAhY1hGZAHUxLVVvTVBWdmktWTVKYjJnOTI1VjJjNm5OVEhaMVlIc2pHb0pJeHVDRGJCdWMtSWxwQnEtWWxRWFUzaEpn";
++    public static final String ACCESS_TOKEN = "IGQVJXRy00MnhsZA0hud2ZAXQVRLOE96dEhTUDJ6Y3lMcTd5bEM5eXhqbHFfMllIVEM0enZAGdGd0SGFEV2dnZAlNEUnJtT2lNUmV4cFpsU1BjREc5Y29ZAYUxQVDVTMk5Vc2ZAYdGRzeHp5NWxkVTVfUVVyQQZDZD";
++    public static final String ACCESS_TOKEN_2 = "IGQVJXZAFA0QmNiWGxmYTR5dmdfT2JQWFBHQ1NQMjhNOFRtSE4yc2tMa3Qtbjc5cG0wVW5CX1R1N2wwUGRnM3doV2I1aGpjUlVuNXlVbDJMQkRQcEJPQ1RQT1JpRDFYdW54WWRfNTBOUFRUdE1nMk5sSgZDZD";
+     public static final String URL_GET_RECENT_MEDIA_USER = URL_BASIC_GRAPH + TYPE_ACCION_PERMISSION + TYPES_ACCESS_MEDIA + ASK_FOR_ACCESS_TOKEN + ACCESS_TOKEN ;
+-
++    public static final String URL_GET_RECENT_MEDIA_USER_2 = URL_BASIC_GRAPH + TYPE_ACCION_PERMISSION + TYPES_ACCESS_MEDIA + ASK_FOR_ACCESS_TOKEN + ACCESS_TOKEN_2;
+ 
+     //https://graph.instagram.com/me/media?fields=id,media_url,caption,timestamp,media_type,permalink,thumbnail_url,username&access_token={poner access-token}
+ 
+Index: app/src/main/res/layout/fragment_perfil.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    tools:context=\".Fragment.PerfilFragment\">\r\n\r\n    <com.mikhaellopez.circularimageview.CircularImageView\r\n        android:id=\"@+id/circularImageView\"\r\n        android:layout_width=\"200dp\"\r\n        android:layout_height=\"200dp\"\r\n        android:layout_gravity=\"center_horizontal\"\r\n        android:src=\"@drawable/pet1\"\r\n        android:scaleType=\"centerInside\"\r\n        app:civ_border=\"true\"\r\n        app:civ_border_width=\"5dp\"\r\n        app:civ_shadow=\"true\"\r\n        app:civ_shadow_radius=\"4dp\" />\r\n\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Anmy.dev\"\r\n        android:textSize=\"16pt\"\r\n        android:textColor=\"@color/colorBlack\"\r\n        android:gravity=\"center_horizontal\"\r\n        />\r\n\r\n   <FrameLayout\r\n       android:layout_width=\"match_parent\"\r\n       android:layout_height=\"match_parent\">\r\n\r\n       <androidx.recyclerview.widget.RecyclerView\r\n           android:id=\"@+id/rvMiMascota\"\r\n           android:layout_width=\"match_parent\"\r\n           android:layout_height=\"match_parent\"\r\n           >\r\n       </androidx.recyclerview.widget.RecyclerView>\r\n\r\n   </FrameLayout>\r\n\r\n\r\n\r\n\r\n\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_perfil.xml	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/res/layout/fragment_perfil.xml	(date 1607215631406)
+@@ -7,12 +7,13 @@
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     tools:context=".Fragment.PerfilFragment">
+ 
++
+     <com.mikhaellopez.circularimageview.CircularImageView
+         android:id="@+id/circularImageView"
+         android:layout_width="200dp"
+         android:layout_height="200dp"
+         android:layout_gravity="center_horizontal"
+-        android:src="@drawable/pet1"
++        android:src="@drawable/cat"
+         android:scaleType="centerInside"
+         app:civ_border="true"
+         app:civ_border_width="5dp"
+@@ -22,7 +23,7 @@
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:text="Anmy.dev"
++        android:text="@string/nomMascota2"
+         android:textSize="16pt"
+         android:textColor="@color/colorBlack"
+         android:gravity="center_horizontal"
+Index: app/src/main/java/com/romychsa/favorito_mascota/RestApi/deserilizador/MascotaDeserializador.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.RestApi.deserilizador;\r\n\r\nimport com.google.gson.Gson;\r\nimport com.google.gson.JsonArray;\r\nimport com.google.gson.JsonDeserializationContext;\r\nimport com.google.gson.JsonDeserializer;\r\nimport com.google.gson.JsonElement;\r\nimport com.google.gson.JsonObject;\r\nimport com.google.gson.JsonParseException;\r\nimport com.romychsa.favorito_mascota.Pojo.Mascota;\r\nimport com.romychsa.favorito_mascota.RestApi.JsonKeys;\r\nimport com.romychsa.favorito_mascota.RestApi.model.MascotaResponse;\r\n\r\nimport java.lang.reflect.Type;\r\nimport java.util.ArrayList;\r\n\r\npublic class MascotaDeserializador implements JsonDeserializer<MascotaResponse> {\r\n    @Override\r\n    public MascotaResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {\r\n        Gson gson = new Gson();\r\n        MascotaResponse mascotaResponse = gson.fromJson(json, MascotaResponse.class);\r\n        JsonArray mascotaResponseData = json.getAsJsonObject().getAsJsonArray(JsonKeys.MEDIA_RESPONSE_ARRAY);\r\n\r\n        mascotaResponse.setMascotas(deserializadorMascotaDeJson(mascotaResponseData));\r\n        return mascotaResponse;\r\n\r\n    }\r\n\r\n    public ArrayList<Mascota> deserializadorMascotaDeJson (JsonArray mascotaResponseData){\r\n        ArrayList<Mascota> mascotas = new ArrayList<>();\r\n        //for (int i=0 ; i<mascotaResponseData.size(); i++){\r\n            for (int i=0 ; i<1; i++){\r\n            JsonObject mascotaResponseDataObject = mascotaResponseData.get(i).getAsJsonObject();\r\n            String id = mascotaResponseDataObject.get(JsonKeys.USER_ID).getAsString();\r\n            String username = mascotaResponseDataObject.get(JsonKeys.USER_NAME).getAsString();\r\n            String urlFoto = mascotaResponseDataObject.get(JsonKeys.MEDIA_URL).getAsString();\r\n\r\n            Mascota mascotaActual = new Mascota();\r\n            mascotaActual.setId(id);\r\n            mascotaActual.setNombre(username);\r\n            mascotaActual.setFoto(urlFoto);\r\n\r\n            mascotas.add(mascotaActual);\r\n        }\r\n        return mascotas;\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/RestApi/deserilizador/MascotaDeserializador.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/RestApi/deserilizador/MascotaDeserializador.java	(date 1607211991256)
+@@ -13,6 +13,7 @@
+ 
+ import java.lang.reflect.Type;
+ import java.util.ArrayList;
++import java.util.Random;
+ 
+ public class MascotaDeserializador implements JsonDeserializer<MascotaResponse> {
+     @Override
+@@ -28,6 +29,7 @@
+ 
+     public ArrayList<Mascota> deserializadorMascotaDeJson (JsonArray mascotaResponseData){
+         ArrayList<Mascota> mascotas = new ArrayList<>();
++
+         //for (int i=0 ; i<mascotaResponseData.size(); i++){
+             for (int i=0 ; i<1; i++){
+             JsonObject mascotaResponseDataObject = mascotaResponseData.get(i).getAsJsonObject();
+@@ -35,10 +37,14 @@
+             String username = mascotaResponseDataObject.get(JsonKeys.USER_NAME).getAsString();
+             String urlFoto = mascotaResponseDataObject.get(JsonKeys.MEDIA_URL).getAsString();
+ 
++            Random r = new Random();
++            int i1 = r.nextInt(10 - 1) + 1;
++
+             Mascota mascotaActual = new Mascota();
+             mascotaActual.setId(id);
+             mascotaActual.setNombre(username);
+             mascotaActual.setFoto(urlFoto);
++            mascotaActual.setRanking(0);
+ 
+             mascotas.add(mascotaActual);
+         }
+Index: app/src/main/java/com/romychsa/favorito_mascota/RestApi/deserilizador/MascotaDeserializadorPerfil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.RestApi.deserilizador;\r\n\r\nimport com.google.gson.Gson;\r\nimport com.google.gson.JsonArray;\r\nimport com.google.gson.JsonDeserializationContext;\r\nimport com.google.gson.JsonDeserializer;\r\nimport com.google.gson.JsonElement;\r\nimport com.google.gson.JsonObject;\r\nimport com.google.gson.JsonParseException;\r\nimport com.romychsa.favorito_mascota.Pojo.Mascota;\r\nimport com.romychsa.favorito_mascota.RestApi.JsonKeys;\r\nimport com.romychsa.favorito_mascota.RestApi.model.MascotaResponse;\r\n\r\nimport java.lang.reflect.Type;\r\nimport java.util.ArrayList;\r\n\r\npublic class MascotaDeserializadorPerfil implements JsonDeserializer<MascotaResponse> {\r\n\r\n    @Override\r\n    public MascotaResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {\r\n        Gson gson = new Gson();\r\n        MascotaResponse mascotaResponse = gson.fromJson(json, MascotaResponse.class);\r\n        JsonArray mascotaResponseData = json.getAsJsonObject().getAsJsonArray(JsonKeys.MEDIA_RESPONSE_ARRAY);\r\n\r\n        mascotaResponse.setMascotas(deserializadorMascotaDeJson(mascotaResponseData));\r\n        return mascotaResponse;\r\n\r\n    }\r\n\r\n    public ArrayList<Mascota> deserializadorMascotaDeJson (JsonArray mascotaResponseData){\r\n        ArrayList<Mascota> mascotas = new ArrayList<>();\r\n        for (int i=0 ; i<mascotaResponseData.size(); i++){\r\n\r\n            JsonObject mascotaResponseDataObject = mascotaResponseData.get(i).getAsJsonObject();\r\n            String id = mascotaResponseDataObject.get(JsonKeys.USER_ID).getAsString();\r\n            String username = mascotaResponseDataObject.get(JsonKeys.USER_NAME).getAsString();\r\n            String urlFoto = mascotaResponseDataObject.get(JsonKeys.MEDIA_URL).getAsString();\r\n\r\n            Mascota mascotaActual = new Mascota();\r\n            mascotaActual.setId(id);\r\n            mascotaActual.setNombre(username);\r\n            mascotaActual.setFoto(urlFoto);\r\n\r\n            mascotas.add(mascotaActual);\r\n        }\r\n        return mascotas;\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/RestApi/deserilizador/MascotaDeserializadorPerfil.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/RestApi/deserilizador/MascotaDeserializadorPerfil.java	(date 1606342371833)
+@@ -13,6 +13,7 @@
+ 
+ import java.lang.reflect.Type;
+ import java.util.ArrayList;
++import java.util.Random;
+ 
+ public class MascotaDeserializadorPerfil implements JsonDeserializer<MascotaResponse> {
+ 
+@@ -36,10 +37,14 @@
+             String username = mascotaResponseDataObject.get(JsonKeys.USER_NAME).getAsString();
+             String urlFoto = mascotaResponseDataObject.get(JsonKeys.MEDIA_URL).getAsString();
+ 
++            Random r = new Random();
++            int i1 = r.nextInt(10 - 1) + 1;
++
+             Mascota mascotaActual = new Mascota();
+             mascotaActual.setId(id);
+             mascotaActual.setNombre(username);
+             mascotaActual.setFoto(urlFoto);
++            mascotaActual.setRanking(i1);
+ 
+             mascotas.add(mascotaActual);
+         }
+Index: app/src/main/java/com/romychsa/favorito_mascota/Activity/ConfigCuenta.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Activity;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.Menu;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\n\r\nimport com.romychsa.favorito_mascota.Adaptador.PerfilMascotaAdaptador;\r\nimport com.romychsa.favorito_mascota.Fragment.PerfilFragment;\r\nimport com.romychsa.favorito_mascota.R;\r\n\r\npublic class ConfigCuenta extends AppCompatActivity implements View.OnClickListener {\r\n    private EditText editTextUsuario;\r\n    private Button btnEnviar;\r\n\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.config_cuenta);\r\n\r\n        Toolbar miActionBar = (Toolbar)findViewById(R.id.miActionBar);\r\n        setSupportActionBar(miActionBar);\r\n        getSupportActionBar().setDisplayHomeAsUpEnabled(true);\r\n        editTextUsuario=(EditText)findViewById(R.id.etAgregar);\r\n        btnEnviar =(Button)findViewById(R.id.btnEnviar);\r\n        btnEnviar.setOnClickListener(this);\r\n    }\r\n\r\n    public boolean onCreateOptionsMenu(Menu menu){\r\n        getMenuInflater().inflate(R.menu.menu_items, menu);\r\n        return super.onCreateOptionsMenu(menu);\r\n\r\n    }\r\n\r\n    public boolean onOptionsItemSelected(MenuItem item){\r\n        int id = item.getItemId();\r\n\r\n        switch (item.getItemId()){\r\n            case R.id.mContacto:\r\n                Intent i = new Intent(this, Contacto.class);\r\n                startActivity(i);\r\n                break;\r\n            case R.id.mAcerca:\r\n                Intent j = new Intent(this, AcercaDe.class);\r\n                startActivity(j);\r\n                break;\r\n\r\n            case R.id.mConfigCuenta:\r\n                Intent h = new Intent(this, ConfigCuenta.class);\r\n                startActivity(h);\r\n                break;\r\n\r\n        }\r\n\r\n        return super.onOptionsItemSelected(item);\r\n    }\r\n\r\n    @Override\r\n    public void onClick(View v) {\r\n        Intent intent = new Intent(ConfigCuenta.this, PerfilMascotaAdaptador.class);\r\n        startActivity(intent);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Activity/ConfigCuenta.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Activity/ConfigCuenta.java	(date 1606336853125)
+@@ -1,10 +1,13 @@
+ package com.romychsa.favorito_mascota.Activity;
+ 
++import android.app.Activity;
+ import android.content.Intent;
+ import android.os.Bundle;
++import android.util.Log;
+ import android.view.Menu;
+ import android.view.MenuItem;
+ import android.view.View;
++import android.widget.Adapter;
+ import android.widget.Button;
+ import android.widget.EditText;
+ 
+@@ -13,22 +16,36 @@
+ 
+ import com.romychsa.favorito_mascota.Adaptador.PerfilMascotaAdaptador;
+ import com.romychsa.favorito_mascota.Fragment.PerfilFragment;
++import com.romychsa.favorito_mascota.Pojo.Mascota;
+ import com.romychsa.favorito_mascota.R;
+ 
++import java.util.ArrayList;
++
+ public class ConfigCuenta extends AppCompatActivity implements View.OnClickListener {
+-    private EditText editTextUsuario;
++    public EditText editTextUsuario;
+     private Button btnEnviar;
+ 
++
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
++        //Actividad en la que se colocar el nombre de usuario y este se confugura según el ususario q se ponga.
+         setContentView(R.layout.config_cuenta);
+ 
+         Toolbar miActionBar = (Toolbar)findViewById(R.id.miActionBar);
+         setSupportActionBar(miActionBar);
+         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+-        editTextUsuario=(EditText)findViewById(R.id.etAgregar);
++        editTextUsuario=findViewById(R.id.etAgregar);
+         btnEnviar =(Button)findViewById(R.id.btnEnviar);
+-        btnEnviar.setOnClickListener(this);
++
++        btnEnviar.setOnClickListener(new View.OnClickListener(){
++
++            @Override
++            public void onClick(View v) {
++                Intent intent = new Intent(ConfigCuenta.this, PerfilMascotaAdaptador.class);
++                startActivity(intent);
++            }
++        });
++
+     }
+ 
+     public boolean onCreateOptionsMenu(Menu menu){
+@@ -62,7 +79,6 @@
+ 
+     @Override
+     public void onClick(View v) {
+-        Intent intent = new Intent(ConfigCuenta.this, PerfilMascotaAdaptador.class);
+-        startActivity(intent);
++
+     }
+ }
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">My Little Pet</string>\r\n    <string name=\"name_mascota\">Lucho</string>\r\n    <string name=\"ranking\">0</string>\r\n    <string name=\"action_favorito\">favorito</string>\r\n    <string name=\"action_setting\">setting</string>\r\n    <string name=\"action_contacto\">Contacto</string>\r\n    <string name=\"action_acerca\">Acerca de...</string>\r\n    <string name=\"action_configcuenta\">Configurar cuenta</string>\r\n    <string name=\"action_notificacion\">Recibir Notificaciones</string>\r\n    <string name=\"edit_nombre\">Nombre y Apellido</string>\r\n    <string name=\"edit_email\">Correo Electrónico</string>\r\n    <string name=\"edit_Comentarios\">Comentarios</string>\r\n    <string name=\"btn_enviarComent\">Enviar Comentario</string>\r\n    <string name=\"tv_empresa\">Reaching dreams es una empresa que tiene como objetivo hacer que tu estilo de vida se conecte de forma sencilla con la tecnologia. </string>\r\n    <!-- TODO: Remove or change this placeholder text -->\r\n    <string name=\"hello_blank_fragment\">Hello blank fragment</string>\r\n    <string name=\"escribir_usuario\">Escribe tu usuario</string>\r\n    <string name=\"agregar_usuario\">Guardar usuario</string>\r\n\r\n    <string name=\"msg_token_fmt\" translatable=\"false\">InstanceID Token: %s</string>\r\n    <string name=\"channel_name\">canal</string>\r\n    <string name=\"channel_description\">Bienvenido al canal 1</string>\r\n\r\n</resources>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/res/values/strings.xml	(date 1606419887992)
+@@ -22,4 +22,7 @@
+     <string name="channel_name">canal</string>
+     <string name="channel_description">Bienvenido al canal 1</string>
+ 
++    <string name="nomMascota1">Anmy.dev</string>
++    <string name="nomMascota2">Estrella.chsa</string>
++
+ </resources>
+Index: app/src/main/res/layout/cardview_miperfil.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.cardview.widget.CardView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:id=\"@+id/cvPerfilMascota\"\r\n    android:layout_width=\"wrap_content\"\r\n    android:layout_height=\"wrap_content\"\r\n    android:layout_marginBottom=\"10dp\"\r\n    app:cardCornerRadius=\"@dimen/cardview_corneradius\">\r\n\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:orientation=\"vertical\"\r\n        android:padding=\"@dimen/cardview_padding\"\r\n        >\r\n\r\n        <ImageView\r\n            android:id=\"@+id/imgMascota\"\r\n            android:layout_width=\"150dp\"\r\n            android:layout_height=\"150dp\"\r\n            android:src=\"@drawable/pet1\"\r\n            android:scaleType=\"centerInside\"\r\n            android:layout_gravity=\"center_horizontal\"\r\n            />\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"horizontal\"\r\n            >\r\n\r\n            <!--\r\n            <TextView\r\n                android:id=\"@+id/tvRanking\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"@string/ranking\"\r\n                android:textSize=\"12pt\"\r\n                android:layout_marginHorizontal=\"30dp\"\r\n                />\r\n -->\r\n            <ImageView\r\n                android:id=\"@+id/huesoamarillo\"\r\n                android:layout_width=\"40dp\"\r\n                android:layout_height=\"40dp\"\r\n                android:src=\"@mipmap/huesoamarillo\"\r\n                android:layout_marginLeft=\"4dp\"\r\n                android:layout_gravity=\"center\"\r\n                />\r\n\r\n\r\n        </LinearLayout>\r\n\r\n\r\n\r\n    </LinearLayout>\r\n\r\n</androidx.cardview.widget.CardView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/cardview_miperfil.xml	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/res/layout/cardview_miperfil.xml	(date 1606342282330)
+@@ -15,6 +15,7 @@
+         android:padding="@dimen/cardview_padding"
+         >
+ 
++
+         <ImageView
+             android:id="@+id/imgMascota"
+             android:layout_width="150dp"
+@@ -30,7 +31,7 @@
+             android:orientation="horizontal"
+             >
+ 
+-            <!--
++
+             <TextView
+                 android:id="@+id/tvRanking"
+                 android:layout_width="wrap_content"
+@@ -39,7 +40,7 @@
+                 android:textSize="12pt"
+                 android:layout_marginHorizontal="30dp"
+                 />
+- -->
++
+             <ImageView
+                 android:id="@+id/huesoamarillo"
+                 android:layout_width="40dp"
+@@ -56,4 +57,5 @@
+ 
+     </LinearLayout>
+ 
+-</androidx.cardview.widget.CardView>
+\ No newline at end of file
++</androidx.cardview.widget.CardView>
++
+Index: app/src/main/java/com/romychsa/favorito_mascota/Fragment/PerfilFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Fragment;\r\n\r\nimport android.graphics.Color;\r\nimport android.os.Bundle;\r\n\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.GridLayoutManager;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.view.ViewStructure;\r\n\r\nimport com.mikhaellopez.circularimageview.CircularImageView;\r\nimport com.romychsa.favorito_mascota.Adaptador.MascotaAdaptador;\r\nimport com.romychsa.favorito_mascota.Adaptador.PerfilMascotaAdaptador;\r\nimport com.romychsa.favorito_mascota.Pojo.Mascota;\r\nimport com.romychsa.favorito_mascota.Presentador.IRecyclerViewFragmentPresenter;\r\nimport com.romychsa.favorito_mascota.Presentador.RecyclerViewFragmentPresenter;\r\nimport com.romychsa.favorito_mascota.Presentador.RecyclerViewPerfilFragmentPresenter;\r\nimport com.romychsa.favorito_mascota.R;\r\n\r\nimport java.util.ArrayList;\r\n\r\n\r\npublic class PerfilFragment extends Fragment implements IPerfilFragment{\r\n\r\n    private ArrayList<Mascota> mascotas;\r\n    private RecyclerView listafotosMiMascotas;\r\n    private IRecyclerViewFragmentPresenter presenter;\r\n\r\n    public PerfilFragment() {\r\n\r\n    }\r\n\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n\r\n        View v = inflater.inflate(R.layout.fragment_perfil, container, false);\r\n        CircularImageView circularImageView = (CircularImageView) v.findViewById(R.id.circularImageView);\r\n\r\n// Set Color\r\n        circularImageView.setCircleColor(Color.BLACK);\r\n// or with gradient\r\n        circularImageView.setBorderColorStart(Color.rgb(161, 24, 109));\r\n        circularImageView.setBorderColorEnd(Color.rgb(244, 76, 181));\r\n        circularImageView.setBorderColorDirection(CircularImageView.GradientDirection.TOP_TO_BOTTOM);\r\n// Add Shadow with default param\r\n        circularImageView.setShadowRadius(30f);\r\n        circularImageView.setShadowColor(Color.BLACK);\r\n        circularImageView.setShadowGravity(CircularImageView.ShadowGravity.BOTTOM);\r\n\r\n\r\n        listafotosMiMascotas = (RecyclerView)v.findViewById(R.id.rvMiMascota);\r\n        //GridLayoutManager glm = new GridLayoutManager(getActivity(),3);\r\n       // glm.setOrientation(LinearLayoutManager.VERTICAL);\r\n        presenter = new RecyclerViewPerfilFragmentPresenter(this, getContext());\r\n        //listafotosMiMascotas.setLayoutManager(glm);\r\n\r\n        //inicializarListaContactos();\r\n        //inicializarAdaptador();\r\n\r\n\r\n        return v;\r\n    }\r\n\r\n    @Override\r\n    public void generarLinearLayoutVertical() {\r\n        LinearLayoutManager llm = new LinearLayoutManager(getActivity());\r\n        llm.setOrientation(LinearLayoutManager.VERTICAL);\r\n        listafotosMiMascotas.setLayoutManager(llm);\r\n    }\r\n\r\n    @Override\r\n    public void generarGridLayout() {\r\n        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3 );\r\n        listafotosMiMascotas.setLayoutManager(gridLayoutManager);\r\n    }\r\n\r\n    @Override\r\n    public PerfilMascotaAdaptador crearAdaptador(ArrayList<Mascota> mascotas) {\r\n        PerfilMascotaAdaptador adaptador = new PerfilMascotaAdaptador(mascotas, getActivity());\r\n        return adaptador;\r\n    }\r\n\r\n    @Override\r\n    public void inicializarAdaptadorRV(PerfilMascotaAdaptador adaptador) {\r\n        listafotosMiMascotas.setAdapter(adaptador);\r\n    }\r\n\r\n\r\n\r\n/*\r\n    public PerfilMascotaAdaptador adaptador;\r\n    public void inicializarAdaptador(){\r\n        adaptador = new PerfilMascotaAdaptador(mascotas, getActivity());\r\n        // MascotaAdaptador adaptador = new MascotaAdaptador(mascotas);\r\n        listafotosMiMascotas.setAdapter(adaptador);\r\n    }\r\n*/\r\n\r\n/*\r\n    public void inicializarListaContactos(){\r\n        mascotas = new ArrayList<Mascota>();\r\n        mascotas.add(new Mascota(1,\"Lucho\",R.drawable.pet1, 9));\r\n        mascotas.add(new Mascota(1,\"Lucho\",R.mipmap.l1, 2));\r\n        mascotas.add(new Mascota(1,\"Lucho\",R.mipmap.l2, 2));\r\n        mascotas.add(new Mascota(1,\"Lucho\",R.mipmap.l3, 5));\r\n        mascotas.add(new Mascota(1, \"Lucho\",R.mipmap.l4,5 ));\r\n        mascotas.add(new Mascota(1, \"Lucho\",R.mipmap.l5, 2));\r\n        mascotas.add(new Mascota(1,\"Lucho\",R.mipmap.l6, 4));\r\n        mascotas.add(new Mascota(1, \"Lucho\",R.mipmap.l7, 5));\r\n        mascotas.add(new Mascota(1, \"Lucho\",R.mipmap.l8, 5));\r\n    }\r\n*/\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Fragment/PerfilFragment.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Fragment/PerfilFragment.java	(date 1606254796441)
+@@ -3,6 +3,7 @@
+ import android.graphics.Color;
+ import android.os.Bundle;
+ 
++import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+ import androidx.fragment.app.Fragment;
+ import androidx.recyclerview.widget.GridLayoutManager;
+@@ -22,28 +23,36 @@
+ import com.romychsa.favorito_mascota.Presentador.RecyclerViewFragmentPresenter;
+ import com.romychsa.favorito_mascota.Presentador.RecyclerViewPerfilFragmentPresenter;
+ import com.romychsa.favorito_mascota.R;
++import com.squareup.picasso.Picasso;
+ 
+ import java.util.ArrayList;
+ 
+ 
+ public class PerfilFragment extends Fragment implements IPerfilFragment{
+ 
+-    private ArrayList<Mascota> mascotas;
++    public static ArrayList<Mascota> mascotasperfil;
+     private RecyclerView listafotosMiMascotas;
+     private IRecyclerViewFragmentPresenter presenter;
+-
+-    public PerfilFragment() {
+-
+-    }
++    private String nombreUsuario;
+ 
+ 
+     @Override
+-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+-                             Bundle savedInstanceState) {
++    public void onCreate(@Nullable Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        if(getArguments() != null){
++            nombreUsuario = getArguments().getString("nombre", "");
++        }
++        else {
++            nombreUsuario = "";
++        }
++    }
+ 
++    @Nullable
++    @Override
++    public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,
++                             @Nullable Bundle savedInstanceState) {
+         View v = inflater.inflate(R.layout.fragment_perfil, container, false);
+         CircularImageView circularImageView = (CircularImageView) v.findViewById(R.id.circularImageView);
+-
+ // Set Color
+         circularImageView.setCircleColor(Color.BLACK);
+ // or with gradient
+@@ -55,17 +64,14 @@
+         circularImageView.setShadowColor(Color.BLACK);
+         circularImageView.setShadowGravity(CircularImageView.ShadowGravity.BOTTOM);
+ 
+-
+         listafotosMiMascotas = (RecyclerView)v.findViewById(R.id.rvMiMascota);
+         //GridLayoutManager glm = new GridLayoutManager(getActivity(),3);
+        // glm.setOrientation(LinearLayoutManager.VERTICAL);
+         presenter = new RecyclerViewPerfilFragmentPresenter(this, getContext());
++
+         //listafotosMiMascotas.setLayoutManager(glm);
+-
+         //inicializarListaContactos();
+         //inicializarAdaptador();
+-
+-
+         return v;
+     }
+ 
+Index: app/src/main/java/com/romychsa/favorito_mascota/Fragment/IRecyclerViewFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Fragment;\r\n\r\nimport com.romychsa.favorito_mascota.Adaptador.MascotaAdaptador;\r\nimport com.romychsa.favorito_mascota.Pojo.Mascota;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic interface IRecyclerViewFragment  {\r\n\r\n    public void generarLinearLayoutVertical();\r\n    public void generarGridLayout();\r\n\r\n    public MascotaAdaptador crearAdaptador(ArrayList<Mascota> mascotas);\r\n\r\n    public void inicializarAdaptadorRV(MascotaAdaptador adaptador);\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Fragment/IRecyclerViewFragment.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Fragment/IRecyclerViewFragment.java	(date 1606334336871)
+@@ -11,7 +11,6 @@
+     public void generarGridLayout();
+ 
+     public MascotaAdaptador crearAdaptador(ArrayList<Mascota> mascotas);
+-
+     public void inicializarAdaptadorRV(MascotaAdaptador adaptador);
+ 
+ 
+Index: app/src/main/java/com/romychsa/favorito_mascota/Adaptador/PerfilMascotaAdaptador.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Adaptador;\r\n\r\nimport android.app.Activity;\r\nimport android.app.NotificationChannel;\r\nimport android.app.NotificationManager;\r\nimport android.os.Build;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.firebase.iid.FirebaseInstanceId;\r\nimport com.google.firebase.iid.InstanceIdResult;\r\nimport com.romychsa.favorito_mascota.Activity.MainActivity;\r\nimport com.romychsa.favorito_mascota.Notificaciones.EndPoints;\r\nimport com.romychsa.favorito_mascota.Notificaciones.RestAPI.adapter.RestApiAdapter;\r\nimport com.romychsa.favorito_mascota.Notificaciones.RestAPI.model.UsuarioResponse;\r\nimport com.romychsa.favorito_mascota.Pojo.Mascota;\r\nimport com.romychsa.favorito_mascota.R;\r\nimport com.squareup.picasso.Picasso;\r\n\r\nimport java.util.ArrayList;\r\n\r\nimport retrofit2.Call;\r\nimport retrofit2.Callback;\r\nimport retrofit2.Response;\r\n\r\nimport static android.provider.Settings.System.getString;\r\n\r\npublic class PerfilMascotaAdaptador extends RecyclerView.Adapter<PerfilMascotaAdaptador.PerfilMascotaViewHolder> {\r\n\r\n    ArrayList<Mascota> mascotas;\r\n    Activity activity;\r\n    public static String CANAL_ID = \"canal\";\r\n    private static final String TAG = \"FIREBASE TOKEN\";\r\n\r\n\r\n    public PerfilMascotaAdaptador(ArrayList<Mascota> mascotas, Activity activity) {\r\n        this.mascotas = mascotas;\r\n        this.activity = activity;\r\n\r\n    }\r\n\r\n    @NonNull\r\n    @Override\r\n    public PerfilMascotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\r\n        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_miperfil, parent,false);\r\n        return new PerfilMascotaViewHolder(v);\r\n    }\r\n\r\n    @Override\r\n    public void onBindViewHolder(@NonNull PerfilMascotaViewHolder perfilmascotaViewHolder, int position) {\r\n        final Mascota mascota = mascotas.get(position);\r\n        //perfilmascotaViewHolder.imgMascota.setImageResource(mascota.getFoto());\r\n        //perfilmascotaViewHolder.tvRanking.setText(String.valueOf(mascota.getRanking()));\r\n\r\n\r\n        Picasso.get ()\r\n                .load (mascota.getFoto())\r\n                .placeholder (R.drawable.ic_action_dog)\r\n                .error(R.drawable.ic_action_dog)\r\n                .into(perfilmascotaViewHolder.imgMascota);\r\n\r\n\r\n    }\r\n\r\n\r\n    @Override\r\n    public int getItemCount() {\r\n       return  mascotas.size();\r\n    }\r\n\r\n\r\n    public static class PerfilMascotaViewHolder extends RecyclerView.ViewHolder{\r\n\r\n        private ImageView imgMascota;\r\n\r\n       // private TextView tvRanking;\r\n\r\n        public PerfilMascotaViewHolder(@NonNull View itemView) {\r\n            super(itemView);\r\n            imgMascota =(ImageView) itemView.findViewById(R.id.imgMascota);\r\n\r\n           // tvRanking =(TextView)itemView.findViewById(R.id.tvRanking);\r\n\r\n        }\r\n\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Adaptador/PerfilMascotaAdaptador.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Adaptador/PerfilMascotaAdaptador.java	(date 1606342371827)
+@@ -4,6 +4,7 @@
+ import android.app.NotificationChannel;
+ import android.app.NotificationManager;
+ import android.os.Build;
++import android.os.Bundle;
+ import android.util.Log;
+ import android.view.LayoutInflater;
+ import android.view.View;
+@@ -20,7 +21,10 @@
+ import com.google.android.gms.tasks.Task;
+ import com.google.firebase.iid.FirebaseInstanceId;
+ import com.google.firebase.iid.InstanceIdResult;
++import com.mikhaellopez.circularimageview.CircularImageView;
++import com.romychsa.favorito_mascota.Activity.ConfigCuenta;
+ import com.romychsa.favorito_mascota.Activity.MainActivity;
++import com.romychsa.favorito_mascota.Fragment.PerfilFragment;
+ import com.romychsa.favorito_mascota.Notificaciones.EndPoints;
+ import com.romychsa.favorito_mascota.Notificaciones.RestAPI.adapter.RestApiAdapter;
+ import com.romychsa.favorito_mascota.Notificaciones.RestAPI.model.UsuarioResponse;
+@@ -42,6 +46,7 @@
+     Activity activity;
+     public static String CANAL_ID = "canal";
+     private static final String TAG = "FIREBASE TOKEN";
++    private String nomUsuario;
+ 
+ 
+     public PerfilMascotaAdaptador(ArrayList<Mascota> mascotas, Activity activity) {
+@@ -50,27 +55,28 @@
+ 
+     }
+ 
++
+     @NonNull
+     @Override
+     public PerfilMascotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_miperfil, parent,false);
+         return new PerfilMascotaViewHolder(v);
++
++
+     }
+ 
+     @Override
+     public void onBindViewHolder(@NonNull PerfilMascotaViewHolder perfilmascotaViewHolder, int position) {
+         final Mascota mascota = mascotas.get(position);
+         //perfilmascotaViewHolder.imgMascota.setImageResource(mascota.getFoto());
+-        //perfilmascotaViewHolder.tvRanking.setText(String.valueOf(mascota.getRanking()));
+-
++         perfilmascotaViewHolder.tvRanking.setText(String.valueOf(mascota.getRanking()));
+ 
+-        Picasso.get ()
+-                .load (mascota.getFoto())
+-                .placeholder (R.drawable.ic_action_dog)
+-                .error(R.drawable.ic_action_dog)
+-                .into(perfilmascotaViewHolder.imgMascota);
++            Picasso.get ()
++                    .load (mascota.getFoto())
++                    .placeholder (R.drawable.ic_action_dog)
++                    .error(R.drawable.ic_action_dog)
++                    .into(perfilmascotaViewHolder.imgMascota);
+ 
+-
+     }
+ 
+ 
+@@ -83,17 +89,14 @@
+     public static class PerfilMascotaViewHolder extends RecyclerView.ViewHolder{
+ 
+         private ImageView imgMascota;
+-
+-       // private TextView tvRanking;
++        private TextView tvRanking;
+ 
+         public PerfilMascotaViewHolder(@NonNull View itemView) {
+             super(itemView);
+             imgMascota =(ImageView) itemView.findViewById(R.id.imgMascota);
+-
+-           // tvRanking =(TextView)itemView.findViewById(R.id.tvRanking);
++            tvRanking =(TextView)itemView.findViewById(R.id.tvRanking);
+ 
+         }
+-
+ 
+     }
+ }
+Index: app/src/main/java/com/romychsa/favorito_mascota/Presentador/RecyclerViewPerfilFragmentPresenter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Presentador;\r\n\r\nimport android.content.Context;\r\nimport android.util.Log;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.gson.Gson;\r\nimport com.romychsa.favorito_mascota.Fragment.IPerfilFragment;\r\nimport com.romychsa.favorito_mascota.Pojo.Mascota;\r\nimport com.romychsa.favorito_mascota.RestApi.EndPointsAPI;\r\nimport com.romychsa.favorito_mascota.RestApi.adapter.RestApiAdapter;\r\nimport com.romychsa.favorito_mascota.RestApi.model.MascotaResponse;\r\nimport com.romychsa.favorito_mascota.db.ConstructorMascotas;\r\n\r\nimport java.util.ArrayList;\r\n\r\nimport retrofit2.Call;\r\nimport retrofit2.Callback;\r\nimport retrofit2.Response;\r\n\r\npublic class RecyclerViewPerfilFragmentPresenter implements IRecyclerViewFragmentPresenter {\r\n    private IPerfilFragment iPerfilFragment;\r\n    private Context context;\r\n    private ConstructorMascotas constructorMascotas;\r\n    private ArrayList<Mascota> mascotas;\r\n\r\n    public RecyclerViewPerfilFragmentPresenter(IPerfilFragment iPerfilFragment, Context context) {\r\n        this.iPerfilFragment = iPerfilFragment;\r\n        this.context = context;\r\n        //obtenerMascotasBaseDatos();\r\n        ObtenerMediosRecientes();\r\n    }\r\n\r\n    @Override\r\n    public void obtenerMascotasBaseDatos() {\r\n\r\n    }\r\n\r\n    @Override\r\n    public void mostrarMascotas() {\r\n        iPerfilFragment.inicializarAdaptadorRV(iPerfilFragment.crearAdaptador(mascotas));\r\n        iPerfilFragment.generarGridLayout();\r\n    }\r\n\r\n    @Override\r\n    public void ObtenerMediosRecientes() {\r\n        RestApiAdapter restApiAdapter = new RestApiAdapter();\r\n        Gson gsonMediaRecent = restApiAdapter.construyeGsonDeserializadorMediaRecentPerfil();\r\n        EndPointsAPI endPointsAPI = restApiAdapter.establecerConexionRestApiInstagram(gsonMediaRecent);\r\n        Call<MascotaResponse> mascotaResponseCall = endPointsAPI.getRecentMedia();\r\n\r\n\r\n        mascotaResponseCall.enqueue(new Callback<MascotaResponse>() {\r\n            @Override\r\n            public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {\r\n                MascotaResponse mascotaResponse = response.body();\r\n                mascotas = mascotaResponse.getMascotas();\r\n                mostrarMascotas();\r\n            }\r\n\r\n            @Override\r\n            public void onFailure(Call<MascotaResponse> call, Throwable t) {\r\n                Toast.makeText(context, \"Algo paso durante el establecimiento de conexión\", Toast.LENGTH_SHORT).show();\r\n                Log.e(\"FALLO LA CONEXIÓN\", t.toString());\r\n\r\n            }\r\n        });\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Presentador/RecyclerViewPerfilFragmentPresenter.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Presentador/RecyclerViewPerfilFragmentPresenter.java	(date 1607215631418)
+@@ -6,6 +6,7 @@
+ 
+ import com.google.gson.Gson;
+ import com.romychsa.favorito_mascota.Fragment.IPerfilFragment;
++import com.romychsa.favorito_mascota.Fragment.PerfilFragment;
+ import com.romychsa.favorito_mascota.Pojo.Mascota;
+ import com.romychsa.favorito_mascota.RestApi.EndPointsAPI;
+ import com.romychsa.favorito_mascota.RestApi.adapter.RestApiAdapter;
+@@ -22,13 +23,15 @@
+     private IPerfilFragment iPerfilFragment;
+     private Context context;
+     private ConstructorMascotas constructorMascotas;
+-    private ArrayList<Mascota> mascotas;
++    private ArrayList<Mascota> mascotas1;
++    private ArrayList<Mascota> mascotas2;
+ 
+     public RecyclerViewPerfilFragmentPresenter(IPerfilFragment iPerfilFragment, Context context) {
+         this.iPerfilFragment = iPerfilFragment;
+         this.context = context;
+         //obtenerMascotasBaseDatos();
+         ObtenerMediosRecientes();
++
+     }
+ 
+     @Override
+@@ -38,7 +41,7 @@
+ 
+     @Override
+     public void mostrarMascotas() {
+-        iPerfilFragment.inicializarAdaptadorRV(iPerfilFragment.crearAdaptador(mascotas));
++        iPerfilFragment.inicializarAdaptadorRV(iPerfilFragment.crearAdaptador(mascotas2));
+         iPerfilFragment.generarGridLayout();
+     }
+ 
+@@ -54,15 +57,32 @@
+             @Override
+             public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {
+                 MascotaResponse mascotaResponse = response.body();
+-                mascotas = mascotaResponse.getMascotas();
++                mascotas1 = mascotaResponse.getMascotas();
++                mostrarMascotas();
++            }
++
++            @Override
++            public void onFailure(Call<MascotaResponse> call, Throwable t) {
++                Toast.makeText(context, "Algo paso durante el establecimiento de conexión", Toast.LENGTH_SHORT).show();
++                Log.e("FALLO LA CONEXIÓN", t.toString());
++
++            }
++        });
++
++
++        Call<MascotaResponse> mascotaResponseCall1 = endPointsAPI.getRecentMedia1();
++
++        mascotaResponseCall1.enqueue(new Callback<MascotaResponse>() {
++            @Override
++            public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {
++                MascotaResponse mascotaResponse = response.body();
++                mascotas2 = mascotaResponse.getMascotas();
+                 mostrarMascotas();
+             }
+-
+             @Override
+             public void onFailure(Call<MascotaResponse> call, Throwable t) {
+                 Toast.makeText(context, "Algo paso durante el establecimiento de conexión", Toast.LENGTH_SHORT).show();
+                 Log.e("FALLO LA CONEXIÓN", t.toString());
+-
+             }
+         });
+ 
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(date 1605463812697)
++++ .idea/compiler.xml	(date 1605463812697)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/java/com/romychsa/favorito_mascota/Presentador/IRecyclerViewFragmentPresenter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Presentador;\r\n\r\npublic interface IRecyclerViewFragmentPresenter {\r\n\r\n    public void obtenerMascotasBaseDatos();\r\n    public void mostrarMascotas();\r\n    public void ObtenerMediosRecientes();\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Presentador/IRecyclerViewFragmentPresenter.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Presentador/IRecyclerViewFragmentPresenter.java	(date 1606254796458)
+@@ -5,4 +5,5 @@
+     public void obtenerMascotasBaseDatos();
+     public void mostrarMascotas();
+     public void ObtenerMediosRecientes();
++
+ }
+Index: app/src/main/java/com/romychsa/favorito_mascota/Presentador/RecyclerViewFragmentPresenter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Presentador;\r\n\r\nimport android.content.Context;\r\nimport android.util.Log;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.gson.Gson;\r\nimport com.romychsa.favorito_mascota.Fragment.IRecyclerViewFragment;\r\nimport com.romychsa.favorito_mascota.Pojo.Mascota;\r\nimport com.romychsa.favorito_mascota.RestApi.EndPointsAPI;\r\nimport com.romychsa.favorito_mascota.RestApi.adapter.RestApiAdapter;\r\nimport com.romychsa.favorito_mascota.RestApi.model.MascotaResponse;\r\nimport com.romychsa.favorito_mascota.db.ConstructorMascotas;\r\n\r\nimport java.util.ArrayList;\r\n\r\nimport retrofit2.Call;\r\nimport retrofit2.Callback;\r\nimport retrofit2.Response;\r\n\r\npublic class RecyclerViewFragmentPresenter implements IRecyclerViewFragmentPresenter {\r\n\r\n    private IRecyclerViewFragment iRecyclerViewFragment;\r\n    private Context context;\r\n    private ConstructorMascotas constructorMascotas;\r\n    private ArrayList<Mascota> mascotas;\r\n\r\n    public RecyclerViewFragmentPresenter(IRecyclerViewFragment iRecyclerViewFragment, Context context) {\r\n        this.iRecyclerViewFragment = iRecyclerViewFragment;\r\n        this.context = context;\r\n        //obtenerMascotasBaseDatos();\r\n        ObtenerMediosRecientes();\r\n    }\r\n\r\n    @Override\r\n    public void obtenerMascotasBaseDatos() {\r\n        constructorMascotas = new ConstructorMascotas(context);\r\n        mascotas = constructorMascotas.obtenerDatos();\r\n        mostrarMascotas();\r\n    }\r\n\r\n    @Override\r\n    public void mostrarMascotas() {\r\n        iRecyclerViewFragment.inicializarAdaptadorRV(iRecyclerViewFragment.crearAdaptador(mascotas));\r\n        iRecyclerViewFragment.generarLinearLayoutVertical();\r\n\r\n    }\r\n\r\n    @Override\r\n    public void ObtenerMediosRecientes() {\r\n\r\n        RestApiAdapter restApiAdapter = new RestApiAdapter();\r\n        Gson gsonMediaRecent = restApiAdapter.construyeGsonDeserializadorMediaRecent();\r\n        EndPointsAPI endPointsAPI = restApiAdapter.establecerConexionRestApiInstagram(gsonMediaRecent);\r\n        Call<MascotaResponse> mascotaResponseCall = endPointsAPI.getRecentMedia();\r\n\r\n        mascotaResponseCall.enqueue(new Callback<MascotaResponse>() {\r\n            @Override\r\n            public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {\r\n                MascotaResponse mascotaResponse = response.body();\r\n                mascotas = mascotaResponse.getMascotas();\r\n                mostrarMascotas();\r\n            }\r\n\r\n            @Override\r\n            public void onFailure(Call<MascotaResponse> call, Throwable t) {\r\n                Toast.makeText(context, \"Algo paso durante el establecimiento de conexión\", Toast.LENGTH_SHORT).show();\r\n                Log.e(\"FALLO LA CONEXIÓN\", t.toString());\r\n\r\n            }\r\n        });\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Presentador/RecyclerViewFragmentPresenter.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Presentador/RecyclerViewFragmentPresenter.java	(date 1606773644439)
+@@ -24,12 +24,15 @@
+     private Context context;
+     private ConstructorMascotas constructorMascotas;
+     private ArrayList<Mascota> mascotas;
++    private ArrayList<Mascota> mascotas2;
++    private ArrayList<Mascota> mascotas1;
+ 
+     public RecyclerViewFragmentPresenter(IRecyclerViewFragment iRecyclerViewFragment, Context context) {
+         this.iRecyclerViewFragment = iRecyclerViewFragment;
+         this.context = context;
+         //obtenerMascotasBaseDatos();
+-        ObtenerMediosRecientes();
++          ObtenerMediosRecientes();
++
+     }
+ 
+     @Override
+@@ -54,6 +57,7 @@
+         EndPointsAPI endPointsAPI = restApiAdapter.establecerConexionRestApiInstagram(gsonMediaRecent);
+         Call<MascotaResponse> mascotaResponseCall = endPointsAPI.getRecentMedia();
+ 
++
+         mascotaResponseCall.enqueue(new Callback<MascotaResponse>() {
+             @Override
+             public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {
+@@ -62,12 +66,33 @@
+                 mostrarMascotas();
+             }
+ 
++            @Override
++            public void onFailure(Call<MascotaResponse> call, Throwable t) {
++                Toast.makeText(context, "Algo paso durante el establecimiento de conexión", Toast.LENGTH_SHORT).show();
++                Log.e("FALLO LA CONEXIÓN", t.toString());
++
++            }
++        });
++
++        Call<MascotaResponse> mascotaResponseCall1 = endPointsAPI.getRecentMedia1();
++
++        mascotaResponseCall1.enqueue(new Callback<MascotaResponse>() {
++            @Override
++            public void onResponse(Call<MascotaResponse> call, Response<MascotaResponse> response) {
++                MascotaResponse mascotaResponse = response.body();
++                mascotas2 = mascotaResponse.getMascotas();
++                    for(Mascota m : mascotas2){
++                        mascotas.add(m);
++                    }
++                mostrarMascotas();
++            }
+             @Override
+             public void onFailure(Call<MascotaResponse> call, Throwable t) {
+                 Toast.makeText(context, "Algo paso durante el establecimiento de conexión", Toast.LENGTH_SHORT).show();
+                 Log.e("FALLO LA CONEXIÓN", t.toString());
+-
+             }
+         });
+     }
++
++
+ }
+Index: app/src/main/java/com/romychsa/favorito_mascota/Notificaciones/ConstantesRestAPI.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Notificaciones;\r\n\r\npublic class ConstantesRestAPI {\r\n    public static final String ROOT_URL = \"https://secure-retreat-42270.herokuapp.com\";\r\n    public static final String KEY_POST_ID_TOKEN = \"token-device/\";\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Notificaciones/ConstantesRestAPI.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Notificaciones/ConstantesRestAPI.java	(date 1606429805175)
+@@ -3,4 +3,5 @@
+ public class ConstantesRestAPI {
+     public static final String ROOT_URL = "https://secure-retreat-42270.herokuapp.com";
+     public static final String KEY_POST_ID_TOKEN = "token-device/";
++    public static final String KEY_TOQUE_MASCOTA = "toque-mascota/{id}/{nombre}";
+ }
+Index: app/src/main/java/com/romychsa/favorito_mascota/Notificaciones/RestAPI/model/UsuarioResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.romychsa.favorito_mascota.Notificaciones.RestAPI.model;\r\n\r\npublic class UsuarioResponse {\r\n    private String id;\r\n    private String token;\r\n    private String nombre;\r\n\r\n\r\n    public UsuarioResponse(String id, String token, String nombre) {\r\n        this.id = id;\r\n        this.token = token;\r\n        this.nombre = nombre;\r\n    }\r\n\r\n    public UsuarioResponse() {\r\n    }\r\n\r\n    public String getId() {\r\n        return id;\r\n    }\r\n\r\n    public void setId(String id) {\r\n        this.id = id;\r\n    }\r\n\r\n    public String getToken() {\r\n        return token;\r\n    }\r\n\r\n    public void setToken(String token) {\r\n        this.token = token;\r\n    }\r\n\r\n    public String getNombre() {\r\n        return nombre;\r\n    }\r\n\r\n    public void setNombre(String nombre) {\r\n        this.nombre = nombre;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/romychsa/favorito_mascota/Notificaciones/RestAPI/model/UsuarioResponse.java	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ app/src/main/java/com/romychsa/favorito_mascota/Notificaciones/RestAPI/model/UsuarioResponse.java	(date 1607032884159)
+@@ -4,7 +4,16 @@
+     private String id;
+     private String token;
+     private String nombre;
++    private int ranking;
++    private String urlfoto;
+ 
++
++    public UsuarioResponse(String id, String token, String nombre, int ranking, String urlfoto) {
++        this.id = id;
++        this.token = token;
++        this.nombre = nombre;
++        this.ranking = ranking;
++    }
+ 
+     public UsuarioResponse(String id, String token, String nombre) {
+         this.id = id;
+@@ -38,4 +47,20 @@
+     public void setNombre(String nombre) {
+         this.nombre = nombre;
+     }
++
++    public int getRanking() {
++        return ranking;
++    }
++
++    public void setRanking(int ranking) {
++        this.ranking = ranking;
++    }
++
++    public String getUrlfoto() {
++        return urlfoto;
++    }
++
++    public void setUrlfoto(String urlfoto) {
++        this.urlfoto = urlfoto;
++    }
+ }
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ .idea/misc.xml	(date 1605463812677)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision cde508f91baf3b04c7a55b9e7248d58978572f23)
++++ .idea/gradle.xml	(date 1605463770644)
+@@ -14,6 +14,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
